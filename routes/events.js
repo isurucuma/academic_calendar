@@ -57,11 +57,16 @@ router.get("/", async (req, res, next) => {
 /* update event listing. */
 router.put("/update/:id", async (req, res, next) => {
   try {
-    const event = await Event.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
+    const entry = await Event.findById(req.params.id);
 
-    res.send(event).status(200);
+    if (!entry) {
+      res.send("Event doesn't exist").status(400);
+    } else {
+      const event = await Event.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+      });
+      res.send(event).status(200);
+    }
   } catch (error) {
     res.send(error.message).status(400);
   }
@@ -70,8 +75,14 @@ router.put("/update/:id", async (req, res, next) => {
 /* delete event listing. */
 router.delete("/update/:id", async (req, res, next) => {
   try {
-    const event = await Event.findByIdAndRemove(req.params.id);
-    res.send(event).status(200);
+    const entry = await Event.findById(req.params.id);
+
+    if (!entry) {
+      res.send("Event doesn't exist").status(400);
+    } else {
+      const event = await Event.findByIdAndRemove(req.params.id);
+      res.send(event).status(200);
+    }
   } catch (error) {
     res.send(error.message).status(400);
   }

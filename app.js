@@ -15,7 +15,7 @@ var eventsRouter = require("./routes/events");
 mongoose
   .connect(process.env.URL)
   .then(() => console.log("connected"))
-  .catch((err) => console.error("couldn't connect"));
+  .catch((err) => console.log(err));
 
 var app = express();
 
@@ -31,7 +31,7 @@ app.use("/events", eventsRouter);
 
 let port = 3001;
 app.listen(port, () => {
-  console.log(`listing at: ${port}`);
+  console.log(`listening at: ${port}`);
 });
 
 module.exports = app;
