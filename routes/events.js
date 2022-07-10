@@ -29,39 +29,52 @@ const Event = new mongoose.model(
 
 /* POST event. */
 router.post("/create", async (req, res, next) => {
-  let event = new Event({
-    title: req.body.title,
-    startDate: req.body.startDate,
-    endDate: req.body.endDate,
-    description: req.body.description,
-    batch: req.body.batch,
-  });
-  event = await Event.create(event);
-  res.send(event).status(200);
+  try {
+    let event = new Event({
+      title: req.body.title,
+      startDate: req.body.startDate,
+      endDate: req.body.endDate,
+      description: req.body.description,
+      batch: req.body.batch,
+    });
+    event = await Event.create(event);
+    res.send(event).status(200);
+  } catch (error) {
+    res.send(error.message).status(400);
+  }
 });
 
 /* GET events listing. */
 router.get("/", async (req, res, next) => {
-  const events = await Event.find();
-  res.send(events);
+  try {
+    const events = await Event.find();
+    res.send(events);
+  } catch (error) {
+    res.send(error.message).status(400);
+  }
 });
 
 /* update event listing. */
 router.put("/update/:id", async (req, res, next) => {
-  let currEvent = await Event.findById(req.params.id);
-  console.log(currEvent);
-  const event = await Event.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-  });
+  try {
+    const event = await Event.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
 
-  res.send(event).status(200);
+    res.send(event).status(200);
+  } catch (error) {
+    res.send(error.message).status(400);
+  }
 });
 
 /* delete event listing. */
 router.delete("/update/:id", async (req, res, next) => {
-  const event = await Event.findByIdAndRemove(req.params.id);
-
-  res.send(event).status(200);
+  try {
+    const event = await Event.findByIdAndRemove(req.params.id);
+    res.send(event).status(200);
+  } catch (error) {
+    res.send(error.message).status(400);
+  }
 });
 
 module.exports = router;
