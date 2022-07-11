@@ -3,8 +3,8 @@
     "version": "0.0.0",
     "private": true,
     "scripts": {
-        "start": "node ./bin/www",
-        "test": "jest ."
+        "start": "node server.js",
+        "test": "jest --detectOpenHandles"
     },
     "dependencies": {
         "cookie-parser": "~1.4.4",

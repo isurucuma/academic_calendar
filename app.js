@@ -13,9 +13,9 @@ var usersRouter = require("./routes/users");
 var eventsRouter = require("./routes/events");
 
 mongoose
-  .connect(process.env.URL)
-  .then(() => console.log("connected"))
-  .catch((err) => console.log(err));
+    .connect(process.env.URL)
+    .then(() => console.log("connected"))
+    .catch((err) => console.log(err));
 
 var app = express();
 
@@ -28,10 +28,5 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/events", eventsRouter);
-
-let port = 3001;
-app.listen(port, () => {
-  console.log(`listening at: ${port}`);
-});
 
 module.exports = app;

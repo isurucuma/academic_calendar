@@ -1,5 +1,6 @@
 const request = require("supertest");
 const app = require("./app");
+const mongoose = require("mongoose");
 
 describe("DB CRUD Operations", () => {
     // get all events
@@ -105,13 +106,9 @@ describe("DB CRUD Operations", () => {
                 );
             });
     });
-
-    // update event for the delete
-    // update event for the updating event params
-
     afterAll((done) => {
         // // Closing the DB connection allows Jest to exit successfully.
-        // mongoose.connection.close();
+        mongoose.connection.close();
         done();
     });
 });
