@@ -15,8 +15,8 @@ import {
   parseISO,
   startOfToday,
 } from 'date-fns'
-import { Fragment, useState, useEffect } from 'react'
-import axios from 'axios'
+import { Fragment, useState } from 'react'
+// import axios from 'axios'
 
 const meetings = [
   {
