@@ -8,9 +8,10 @@ var logger = require("morgan");
 // connect to the database
 const mongoose = require("mongoose");
 
-var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
-var eventsRouter = require("./routes/events");
+const indexRouter = require("./routes/index");
+const usersRouter = require("./routes/users");
+const eventsRouter = require("./routes/events");
+const notificationsRouter = require("./routes/notifications");
 
 mongoose
     .connect(process.env.URL)
@@ -26,7 +27,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
-app.use("/events", eventsRouter);
+app.use("/api/users", usersRouter);
+app.use("/api/events", eventsRouter);
+app.use("/api/notifications", notificationsRouter);
 
 module.exports = app;
