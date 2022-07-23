@@ -66,24 +66,24 @@ function classNames(...classes) {
 }
 
 export default function Example() {
-  const [data, setData] = useState(null)
-  const [isLoading, setLoading] = useState(false)
-  console.log(isLoading)
+  // const [data, setData] = useState(null)
+  // const [isLoading, setLoading] = useState(false)
+  // console.log(isLoading)
 
-  async function fetchData() {
-    let res
-    await axios.get('http://localhost:3001/events').then((data) => {
-      res = data.data
-    })
-    return res
-  }
+  // async function fetchData() {
+  //   let res
+  //   await axios.get('http://localhost:3001/events').then((data) => {
+  //     res = data.data
+  //   })
+  //   return res
+  // }
 
-  useEffect(() => {
-    setLoading(true)
-    const data = fetchData()
-    setData(data)
-    setLoading(false)
-  }, [])
+  // useEffect(() => {
+  //   setLoading(true)
+  //   // const data = fetchData()
+  //   setData(data)
+  //   setLoading(false)
+  // }, [])
   let today = startOfToday()
   let [selectedDay, setSelectedDay] = useState(today)
   let [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyyy'))
@@ -103,14 +103,17 @@ export default function Example() {
     let firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 })
     setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'))
   }
-  let selectedDayMeetings
-  if (data !== undefined && data !== null) {
-    selectedDayMeetings = data.filter((data) => {
-      if (isSameDay(parseISO(data.startDate), selectedDay)) {
-        return data.startDate
-      }
-    })
-  }
+  // let selectedDayMeetings
+  // if (data !== undefined && data !== null) {
+  //   selectedDayMeetings = data.filter((data) => {
+  //     if (isSameDay(parseISO(data.startDate), selectedDay)) {
+  //       return data.startDate
+  //     }
+  //   })
+  // }
+  let selectedDayMeetings = meetings.filter((meeting) =>
+    isSameDay(parseISO(meeting.startDatetime), selectedDay)
+  )
   //checking whether the current branch is working
   return (
     <div className="container pt-16">
@@ -270,11 +273,18 @@ export default function Example() {
               </time>
             </h2>
             <ol className="mt-4 space-y-1 text-sm leading-6 text-gray-500">
-              {data !== undefined &&
+              {/* {data !== undefined &&
               data !== null &&
               selectedDayMeetings.length > 0 ? (
                 selectedDayMeetings.map((data) => (
                   <Meeting data={data} key={data._id} />
+                ))
+              ) : (
+                <p>No meetings for today.</p>
+              )} */}
+              {selectedDayMeetings.length > 0 ? (
+                selectedDayMeetings.map((meeting) => (
+                  <Meeting meeting={meeting} key={meeting.id} />
                 ))
               ) : (
                 <p>No meetings for today.</p>
@@ -287,9 +297,12 @@ export default function Example() {
   )
 }
 
-function Meeting({ data }) {
-  let startDate = parseISO(data.startDate)
-  let endDate = parseISO(data.endDate)
+function Meeting({ meeting }) {
+  // let startDate = parseISO(data.startDate)
+  // let endDate = parseISO(data.endDate)
+
+  let startDateTime = parseISO(meeting.startDatetime)
+  let endDateTime = parseISO(meeting.endDatetime)
 
   return (
     <li className="flex items-center px-4 py-2 space-x-4 group rounded-xl focus-within:bg-gray-100 hover:bg-gray-100">
@@ -299,10 +312,18 @@ function Meeting({ data }) {
         className="flex-none w-10 h-10 rounded-full"
       /> */}
       <div className="flex-auto">
-        <p className="text-gray-900">{data.title}</p>
+        {/* <p className="text-gray-900">{data.title}</p> */}
+        <p className="text-gray-900">{meeting.name}</p>
         <p className="mt-0.5">
-          <time dateTime={data.startDate}>{format(startDate, 'h:mm a')}</time> -{' '}
-          <time dateTime={data.endDate}>{format(endDate, 'h:mm a')}</time>
+          {/* <time dateTime={data.startDate}>{format(startDate, 'h:mm a')}</time> -{' '}
+          <time dateTime={data.endDate}>{format(endDate, 'h:mm a')}</time> */}
+          <time dateTime={meeting.startDatetime}>
+            {format(startDateTime, 'h:mm a')}
+          </time>{' '}
+          -{' '}
+          <time dateTime={meeting.endDatetime}>
+            {format(endDateTime, 'h:mm a')}
+          </time>
         </p>
       </div>
       <Menu
