@@ -68,14 +68,21 @@ function classNames(...classes) {
 export default function Example() {
   const [data, setData] = useState(null)
   const [isLoading, setLoading] = useState(false)
+  console.log(isLoading)
 
-  useEffect(async () => {
-    setLoading(true)
+  async function fetchData() {
+    let res
     await axios.get('http://localhost:3001/events').then((data) => {
-      setData(data.data)
-      setLoading(false)
+      res = data.data
     })
-    console.log(data)
+    return res
+  }
+
+  useEffect(() => {
+    setLoading(true)
+    const data = fetchData()
+    setData(data)
+    setLoading(false)
   }, [])
   let today = startOfToday()
   let [selectedDay, setSelectedDay] = useState(today)
