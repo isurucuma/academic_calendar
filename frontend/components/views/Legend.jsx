@@ -1,5 +1,4 @@
-import React, { useContext } from 'react'
-import { addContext } from '../../pages'
+import React from 'react'
 
 const legend = [
   { name: 'Dead week', color: 'border-orange-500', topMargin: 'mt-5' },
@@ -35,8 +34,6 @@ const legend = [
 ]
 
 function Legend() {
-  // const state = useContext(addContext)
-
   return (
     <section className="object-fill border-2 border-gray-400 rounded-lg h-96">
       <div className="m-4">
