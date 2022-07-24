@@ -116,8 +116,11 @@ export default function Example() {
   )
   //checking whether the current branch is working
   return (
-    <div className="container pt-16">
-      <div className="max-w-xl px-4 mx-auto sm:px-7 md:max-w-4xl md:px-6 ">
+    <div className="container">
+      <div className="flex justify-center mt-6 text-xl font-bold text-stone-600">
+        <span>Academic Calender</span>
+      </div>
+      <div className="px-4 mx-auto mt-6 sm:px-7 md:max-w-6xl md:px-6">
         <div className="gap-4 md:grid md:grid-cols-7">
           <section className="col-span-2 border-2 border-gray-400 rounded-lg ">
             <div className="m-4">
@@ -203,13 +206,13 @@ export default function Example() {
               </button>
             </div>
             <div className="grid grid-cols-7 mt-10 text-xs leading-6 text-center text-gray-500">
-              <div>S</div>
-              <div>M</div>
-              <div>T</div>
-              <div>W</div>
-              <div>T</div>
-              <div>F</div>
-              <div>S</div>
+              <div>SUN</div>
+              <div>MON</div>
+              <div>TUE</div>
+              <div>WED</div>
+              <div>THR</div>
+              <div>FRI</div>
+              <div>SAT</div>
             </div>
             <div className="grid grid-cols-7 mt-2 text-sm">
               {days.map((day, dayIdx) => (
@@ -217,7 +220,7 @@ export default function Example() {
                   key={day.toString()}
                   className={classNames(
                     dayIdx === 0 && colStartClasses[getDay(day)],
-                    'py-1.5'
+                    'py-1'
                   )}
                 >
                   <button
@@ -242,11 +245,11 @@ export default function Example() {
                         'bg-gray-900',
                       !isEqual(day, selectedDay) && 'hover:bg-gray-200',
                       (isEqual(day, selectedDay) || isToday(day)) &&
-                        'font-semibold',
+                        'font-bold',
                       meetings.some((meeting) =>
                         isSameDay(parseISO(meeting.startDatetime), day)
                       ) && 'solid border-2 border-blue-500',
-                      'solid day-btn mx-auto flex h-8 w-8 items-center justify-center rounded-full'
+                      'solid day-btn mx-auto flex h-10 w-10 items-center justify-center rounded-full'
                     )}
                   >
                     <time dateTime={format(day, 'yyyy-MM-dd')}>
@@ -266,7 +269,7 @@ export default function Example() {
             </div>
           </section>
           <section className="col-span-2 mt-6 border-2 border-gray-400 rounded-lg md:mt-0">
-            <h2 className="font-semibold text-gray-900">
+            <h2 className="px-4 py-2 font-semibold text-gray-900">
               Schedule for{' '}
               <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>
                 {format(selectedDay, 'MMM dd, yyy')}
@@ -287,7 +290,7 @@ export default function Example() {
                   <Meeting meeting={meeting} key={meeting.id} />
                 ))
               ) : (
-                <p>No meetings for today.</p>
+                <p className="px-4 py-2">No meetings for today.</p>
               )}
             </ol>
           </section>

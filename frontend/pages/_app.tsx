@@ -1,8 +1,23 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
+import { useState } from 'react'
+import NavBar from '../components/NavBar'
+import Footer from '../components/Footer'
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
-}
+  return (
+    <div className="flex flex-col min-h-screen col-4">
+      <div className="col-span-1">
+        <NavBar />
+      </div>
 
+      <div className="flex flex-wrap col-span-2 h-4/6">
+        <Component {...pageProps} />
+      </div>
+      <div className="col-span-1 mt-auto">
+        <Footer />
+      </div>
+    </div>
+  )
+}
 export default MyApp
