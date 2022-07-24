@@ -1,5 +1,5 @@
 import React from 'react'
-import CustomListBox from './CustomListBox'
+import CustomListBox from '../custom/CustomListBox'
 
 function NavBar() {
   return (

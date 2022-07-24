@@ -1,8 +1,8 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import { useState } from 'react'
-import NavBar from '../components/NavBar'
-import Footer from '../components/Footer'
+import NavBar from '../components/header/NavBar'
+import Footer from '../components/footer/Footer'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
