@@ -5,6 +5,7 @@ export const addContext = createContext()
 
 export default function Example() {
   const [flag, setFlags] = useState(false)
+  const [date, setDate] = useState({ startDate: '', endDate: '' })
 
   return (
     <div className="container">
@@ -12,11 +13,11 @@ export default function Example() {
         <span>Academic Calender</span>
       </div>
       <div className="px-4 mx-auto mt-6 sm:px-7 md:max-w-6xl md:px-6">
-        <div className="flex gap-4 md:grid md:grid-cols-7">
+        <div className="flex grid-cols-1 gap-4 md:grid md:grid-cols-7">
           {flag ? (
             <>
               <div className="col-span-7 h-96">
-                <addContext.Provider value={{ setFlags, flag }}>
+                <addContext.Provider value={{ setFlags, flag, setDate, date }}>
                   <Calender />
                 </addContext.Provider>
               </div>

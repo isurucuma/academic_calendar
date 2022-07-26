@@ -4,14 +4,14 @@ import { format, parseISO } from 'date-fns'
 import { Fragment, useContext } from 'react'
 import { addContext } from '../../pages'
 
-export default function Meeting({ meeting }) {
+export default function Meeting({ data }) {
   const state = useContext(addContext)
-  console.log(state.flag)
-  // let startDate = parseISO(data.startDate)
-  // let endDate = parseISO(data.endDate)
+  // console.log(data)
+  let startDate = parseISO(data.startDate)
+  let endDate = parseISO(data.endDate)
 
-  let startDateTime = parseISO(meeting.startDatetime)
-  let endDateTime = parseISO(meeting.endDatetime)
+  // let startDateTime = parseISO(meeting.startDatetime)
+  // let endDateTime = parseISO(meeting.endDatetime)
 
   return (
     <li className="flex items-center px-4 py-2 space-x-4 group rounded-xl focus-within:bg-gray-100 hover:bg-gray-100">
@@ -21,18 +21,19 @@ export default function Meeting({ meeting }) {
         className="flex-none w-10 h-10 rounded-full"
       /> */}
       <div className="flex-auto">
-        {/* <p className="text-gray-900">{data.title}</p> */}
-        <p className="text-gray-900">{meeting.name}</p>
+        <p className="text-gray-900">{data.eventTitle}</p>
+        {/* <p className="text-gray-900">{meeting.name}</p> */}
         <p className="mt-0.5">
+          {data.description}
           {/* <time dateTime={data.startDate}>{format(startDate, 'h:mm a')}</time> -{' '}
           <time dateTime={data.endDate}>{format(endDate, 'h:mm a')}</time> */}
-          <time dateTime={meeting.startDatetime}>
+          {/* <time dateTime={meeting.startDatetime}>
             {format(startDateTime, 'h:mm a')}
           </time>{' '}
           -{' '}
           <time dateTime={meeting.endDatetime}>
             {format(endDateTime, 'h:mm a')}
-          </time>
+          </time> */}
         </p>
       </div>
       <Menu
