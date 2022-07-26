@@ -1,22 +1,22 @@
 {
-    "name": "academic-calendar",
-    "version": "0.0.0",
-    "private": true,
-    "scripts": {
-        "start": "node server.js",
-        "test": "jest"
-    },
-    "dependencies": {
-        "cookie-parser": "~1.4.4",
-        "debug": "~2.6.9",
-        "dotenv": "^16.0.1",
-        "express": "~4.16.1",
-        "mongoose": "^6.4.4",
-        "morgan": "~1.9.1",
-        "nodemon": "^2.0.19"
-    },
-    "devDependencies": {
-        "jest": "^28.1.2",
-        "supertest": "^6.2.4"
-    }
+  "name": "academic-calendar",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "dotenv": "^16.0.1",
+    "express": "~4.16.1",
+    "mongoose": "^6.4.4",
+    "morgan": "~1.9.1",
+    "nodemon": "^2.0.19"
+  },
+  "devDependencies": {
+    "jest": "^28.1.2",
+    "supertest": "^6.2.4"
+  }
 }
