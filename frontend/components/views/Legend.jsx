@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 
 const legend = [
   { name: 'Dead week', color: 'border-orange-500', topMargin: 'mt-5' },
@@ -34,23 +35,44 @@ const legend = [
 ]
 
 function Legend() {
+  const [data, setData] = React.useState()
+
+  React.useEffect(() => {
+    async function getData() {
+      const { data } = await axios.get(
+        `http://localhost:3001/api/eventsCategory/`
+      )
+      setData(data)
+    }
+    getData()
+  }, [])
+
   return (
     <section className="object-fill border-2 border-gray-400 rounded-lg h-96">
-      <div className="m-4">
-        {/* <h2 className="flex justify-center font-bold text-gray-900 ">
+      {data ? (
+        <>
+          <div className="m-4">
+            {/* <h2 className="flex justify-center font-bold text-gray-900 ">
               Events category
             </h2> */}
-        {legend.map((item, i) => {
-          return (
-            <div key={i} className={`flex ${item.topMargin}`}>
-              <div
-                className={`mx-auto mt-1 h-6 w-6 border-2 ${item.color} rounded-full`}
-              ></div>
-              <span className="flex w-3/4 py-1 text-xs">{item.name}</span>
-            </div>
-          )
-        })}
-      </div>
+
+            {legend.map((item, i) => {
+              return (
+                <div key={i} className={`flex ${item.topMargin}`}>
+                  <div
+                    className={`mx-auto mt-1 h-6 w-6 border-2 ${item.color} rounded-full`}
+                  ></div>
+                  <span className="flex w-3/4 py-1 text-xs">
+                    {data[i].name}
+                  </span>
+                </div>
+              )
+            })}
+          </div>
+        </>
+      ) : (
+        <>loading....</>
+      )}
     </section>
   )
 }
