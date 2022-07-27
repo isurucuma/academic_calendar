@@ -147,7 +147,7 @@ function Form_1() {
           </Button>
           <Button
             className="ml-3"
-            onClick={(e) => state.setFlags(false)}
+            onClick={() => state.setFlags(false)}
             variant="outlined"
             startIcon={<ArrowBackIcon />}
           >
