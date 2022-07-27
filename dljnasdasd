@@ -1,0 +1,341 @@
+[1mdiff --git a/app.js b/app.js[m
+[1mindex 3e569e9..acb4974 100644[m
+[1m--- a/app.js[m
+[1m+++ b/app.js[m
+[36m@@ -13,9 +13,9 @@[m [mvar usersRouter = require("./routes/users");[m
+ var eventsRouter = require("./routes/events");[m
+ [m
+ mongoose[m
+[31m-    .connect(process.env.URL)[m
+[31m-    .then(() => console.log("connected"))[m
+[31m-    .catch((err) => console.log(err));[m
+[32m+[m[32m  .connect(process.env.URL)[m
+[32m+[m[32m  .then(() => console.log("connected"))[m
+[32m+[m[32m  .catch((err) => console.log(err));[m
+ [m
+ var app = express();[m
+ [m
+[36m@@ -25,8 +25,8 @@[m [mapp.use(express.urlencoded({ extended: false }));[m
+ app.use(cookieParser());[m
+ app.use(express.static(path.join(__dirname, "public")));[m
+ [m
+[31m-app.use("/", indexRouter);[m
+[31m-app.use("/users", usersRouter);[m
+[31m-app.use("/events", eventsRouter);[m
+[32m+[m[32mapp.use("/api/", indexRouter);[m
+[32m+[m[32mapp.use("/api/users", usersRouter);[m
+[32m+[m[32mapp.use("/api/events", eventsRouter);[m
+ [m
+ module.exports = app;[m
+[1mdiff --git a/frontend/components/views/Calender.jsx b/frontend/components/views/Calender.jsx[m
+[1mindex d49bf51..aeb2d8f 100644[m
+[1m--- a/frontend/components/views/Calender.jsx[m
+[1m+++ b/frontend/components/views/Calender.jsx[m
+[36m@@ -204,18 +204,74 @@[m [mfunction Calender() {[m
+         <>[m
+           <section className="flex flex-col col-span-4 mt-6 border-2 border-gray-400 rounded-lg md:mt-0">[m
+             <h2 className="px-4 py-2 font-semibold text-gray-900">[m
+[31m-              Add event[m
+[32m+[m[32m              Add event{' '}[m
+               <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>[m
+                 {format(selectedDay, 'MMM dd, yyy')}[m
+               </time>[m
+             </h2>[m
+[31m-            <Button[m
+[31m-              variant="outlined"[m
+[31m-              startIcon={<AddBoxIcon />}[m
+[31m-              onClick={() => state.setFlags(false)}[m
+[31m-            >[m
+[31m-              Add[m
+[31m-            </Button>[m
+[32m+[m
+[32m+[m[32m            <ol className="mt-4 space-y-1 text-sm leading-6 text-gray-500">[m
+[32m+[m[32m              <div className="px-4 py-2">[m
+[32m+[m[32m                <form method="POST" id="contactForm" name="contactForm">[m
+[32m+[m[32m                  <div className="flex">[m
+[32m+[m[32m                    <div className="col-md-6">[m
+[32m+[m[32m                      <div className="form-group">[m
+[32m+[m[32m                        <input[m
+[32m+[m[32m                          type="text"[m
+[32m+[m[32m                          className="form-control"[m
+[32m+[m[32m                          name="name"[m
+[32m+[m[32m                          id="name"[m
+[32m+[m[32m                          placeholder="Name"[m
+[32m+[m[32m                        />[m
+[32m+[m[32m                      </div>[m
+[32m+[m[32m                    </div>[m
+[32m+[m[32m                    <div className="col-md-6">[m
+[32m+[m[32m                      <div className="form-group">[m
+[32m+[m[32m                        <input[m
+[32m+[m[32m                          type="email"[m
+[32m+[m[32m                          className="form-control"[m
+[32m+[m[32m                          name="email"[m
+[32m+[m[32m                          id="email"[m
+[32m+[m[32m                          placeholder="Email"[m
+[32m+[m[32m                        />[m
+[32m+[m[32m                      </div>[m
+[32m+[m[32m                    </div>[m
+[32m+[m[32m                    <div className="col-md-12">[m
+[32m+[m[32m                      <div className="form-group">[m
+[32m+[m[32m                        <input[m
+[32m+[m[32m                          type="text"[m
+[32m+[m[32m                          className="form-control"[m
+[32m+[m[32m                          name="subject"[m
+[32m+[m[32m                          id="subject"[m
+[32m+[m[32m                          placeholder="Subject"[m
+[32m+[m[32m                        />[m
+[32m+[m[32m                      </div>[m
+[32m+[m[32m                    </div>[m
+[32m+[m[32m                  </div>[m
+[32m+[m[32m                  <div className="col-md-12">[m
+[32m+[m[32m                    <div className="form-group">[m
+[32m+[m[32m                      <textarea[m
+[32m+[m[32m                        name="message"[m
+[32m+[m[32m                        className="form-control"[m
+[32m+[m[32m                        id="message"[m
+[32m+[m[32m                        cols="30"[m
+[32m+[m[32m                        rows="7"[m
+[32m+[m[32m                        placeholder="Message"[m
+[32m+[m[32m                      ></textarea>[m
+[32m+[m[32m                    </div>[m
+[32m+[m[32m                  </div>[m
+[32m+[m[32m                  <div className="col-md-12">[m
+[32m+[m[32m                    <Button[m
+[32m+[m[32m                      variant="outlined"[m
+[32m+[m[32m                      startIcon={<AddBoxIcon />}[m
+[32m+[m[32m                      onClick={() => state.setFlags(false)}[m
+[32m+[m[32m                    >[m
+[32m+[m[32m                      Add[m
+[32m+[m[32m                    </Button>[m
+[32m+[m[32m                  </div>[m
+[32m+[m[32m                </form>[m
+[32m+[m[32m              </div>[m
+[32m+[m[32m            </ol>[m
+           </section>[m
+         </>[m
+       ) : ([m
+[1mdiff --git a/frontend/components/views/Meeting.jsx b/frontend/components/views/Meeting.jsx[m
+[1mindex bd85d5b..be505c8 100644[m
+[1m--- a/frontend/components/views/Meeting.jsx[m
+[1m+++ b/frontend/components/views/Meeting.jsx[m
+[36m@@ -6,7 +6,7 @@[m [mimport { addContext } from '../../pages'[m
+ [m
+ export default function Meeting({ meeting }) {[m
+   const state = useContext(addContext)[m
+[31m-  console.log(state.flag)[m
+[32m+[m
+   // let startDate = parseISO(data.startDate)[m
+   // let endDate = parseISO(data.endDate)[m
+ [m
+[1mdiff --git a/frontend/package-lock.json b/frontend/package-lock.json[m
+[1mindex 48db43e..3aec168 100644[m
+[1m--- a/frontend/package-lock.json[m
+[1m+++ b/frontend/package-lock.json[m
+[36m@@ -5,14 +5,17 @@[m
+   "packages": {[m
+     "": {[m
+       "dependencies": {[m
+[32m+[m[32m        "@date-io/date-fns": "^2.14.0",[m
+         "@emotion/react": "^11.9.3",[m
+         "@emotion/styled": "^11.9.3",[m
+         "@headlessui/react": "^1.6.1",[m
+         "@heroicons/react": "^1.0.6",[m
+         "@mui/icons-material": "^5.8.4",[m
+         "@mui/material": "^5.9.1",[m
+[32m+[m[32m        "@mui/x-date-pickers": "^5.0.0-beta.2",[m
+[32m+[m[32m        "@mui/x-date-pickers-pro": "^5.0.0-beta.2",[m
+         "axios": "^0.27.2",[m
+[31m-        "date-fns": "^2.28.0",[m
+[32m+[m[32m        "date-fns": "^2.29.1",[m
+         "next": "latest",[m
+         "react": "^17.0.2",[m
+         "react-dom": "^17.0.2"[m
+[36m@@ -400,9 +403,9 @@[m
+       }[m
+     },[m
+     "node_modules/@babel/runtime": {[m
+[31m-      "version": "7.17.9",[m
+[31m-      "resolved": "https://registry.npmjs.org/@babel/runtime/-/runtime-7.17.9.tgz",[m
+[31m-      "integrity": "sha512-lSiBBvodq29uShpWGNbgFdKYNiFDo5/HIYsaCEY9ff4sb10x9jizo2+pRrSyF4jKZCXqgzuqBOQKbUm90gQwJg==",[m
+[32m+[m[32m      "version": "7.18.9",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/@babel/runtime/-/runtime-7.18.9.tgz",[m
+[32m+[m[32m      "integrity": "sha512-lkqXDcvlFT5rvEjiu6+QYO+1GXrEHRo2LOtS7E4GtX5ESIZOgepqsZBVIj6Pv+a6zqsya9VCgiK1KAK4BvJDAw==",[m
+       "dependencies": {[m
+         "regenerator-runtime": "^0.13.4"[m
+       },[m
+[36m@@ -479,6 +482,75 @@[m
+         "node": ">=6.9.0"[m
+       }[m
+     },[m
+[32m+[m[32m    "node_modules/@date-io/core": {[m
+[32m+[m[32m      "version": "2.14.0",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/@date-io/core/-/core-2.14.0.tgz",[m
+[32m+[m[32m      "integrity": "sha512-qFN64hiFjmlDHJhu+9xMkdfDG2jLsggNxKXglnekUpXSq8faiqZgtHm2lsHCUuaPDTV6wuXHcCl8J1GQ5wLmPw=="[m
+[32m+[m[32m    },[m
+[32m+[m[32m    "node_modules/@date-io/date-fns": {[m
+[32m+[m[32m      "version": "2.14.0",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/@date-io/date-fns/-/date-fns-2.14.0.tgz",[m
+[32m+[m[32m      "integrity": "sha512-4fJctdVyOd5cKIKGaWUM+s3MUXMuzkZaHuTY15PH70kU1YTMrCoauA7hgQVx9qj0ZEbGrH9VSPYJYnYro7nKiA==",[m
+[32m+[m[32m      "dependencies": {[m
+[32m+[m[32m        "@date-io/core": "^2.14.0"[m
+[32m+[m[32m      },[m
+[32m+[m[32m      "peerDependencies": {[m
+[32m+[m[32m        "date-fns": "^2.0.0"[m
+[32m+[m[32m      },[m
+[32m+[m[32m      "peerDependenciesMeta": {[m
+[32m+[m[32m        "date-fns": {[m
+[32m+[m[32m          "optional": true[m
+[32m+[m[32m        }[m
+[32m+[m[32m      }[m
+[32m+[m[32m    },[m
+[32m+[m[32m    "node_modules/@date-io/dayjs": {[m
+[32m+[m[32m      "version": "2.14.0",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/@date-io/dayjs/-/dayjs-2.14.0.tgz",[m
+[32m+[m[32m      "integrity": "sha512-4fRvNWaOh7AjvOyJ4h6FYMS7VHLQnIEeAV5ahv6sKYWx+1g1UwYup8h7+gPuoF+sW2hTScxi7PVaba2Jk/U8Og==",[m
+[32m+[m[32m      "dependencies": {[m
+[32m+[m[32m        "@date-io/core": "^2.14.0"[m
+[32m+[m[32m      },[m
+[32m+[m[32m      "peerDependencies": {[m
+[32m+[m[32m        "dayjs": "^1.8.17"[m
+[32m+[m[32m      },[m
+[32m+[m[32m      "peerDependenciesMeta": {[m
+[32m+[m[32m        "dayjs": {[m
+[32m+[m[32m          "optional": true[m
+[32m+[m[32m        }[m
+[32m+[m[32m      }[m
+[32m+[m[32m    },[m
+[32m+[m[32m    "node_modules/@date-io/luxon": {[m
+[32m+[m[32m      "version": "2.14.0",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/@date-io/luxon/-/luxon-2.14.0.tgz",[m
+[32m+[m[32m      "integrity": "sha512-KmpBKkQFJ/YwZgVd0T3h+br/O0uL9ZdE7mn903VPAG2ZZncEmaUfUdYKFT7v7GyIKJ4KzCp379CRthEbxevEVg==",[m
+[32m+[m[32m      "dependencies": {[m
+[32m+[m[32m        "@date-io/core": "^2.14.0"[m
+[32m+[m[32m      },[m
+[32m+[m[32m      "peerDependencies": {[m
+[32m+[m[32m        "luxon": "^1.21.3 || ^2.x"[m
+[32m+[m[32m      },[m
+[32m+[m[32m      "peerDependenciesMeta": {[m
+[32m+[m[32m        "luxon": {[m
+[32m+[m[32m          "optional": true[m
+[32m+[m[32m        }[m
+[32m+[m[32m      }[m
+[32m+[m[32m    },[m
+[32m+[m[32m    "node_modules/@date-io/moment": {[m
+[32m+[m[32m      "version": "2.14.0",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/@date-io/moment/-/moment-2.14.0.tgz",[m
+[32m+[m[32m      "integrity": "sha512-VsoLXs94GsZ49ecWuvFbsa081zEv2xxG7d+izJsqGa2L8RPZLlwk27ANh87+SNnOUpp+qy2AoCAf0mx4XXhioA==",[m
+[32m+[m[32m      "dependencies": {[m
+[32m+[m[32m        "@date-io/core": "^2.14.0"[m
+[32m+[m[32m      },[m
+[32m+[m[32m      "peerDependencies": {[m
+[32m+[m[32m        "moment": "^2.24.0"[m
+[32m+[m[32m      },[m
+[32m+[m[32m      "peerDependenciesMeta": {[m
+[32m+[m[32m        "moment": {[m
+[32m+[m[32m          "optional": true[m
+[32m+[m[32m        }[m
+[32m+[m[32m      }[m
+[32m+[m[32m    },[m
+     "node_modules/@emotion/babel-plugin": {[m
+       "version": "11.9.2",[m
+       "resolved": "https://registry.npmjs.org/@emotion/babel-plugin/-/babel-plugin-11.9.2.tgz",[m
+[36m@@ -967,6 +1039,129 @@[m
+       "resolved": "https://registry.npmjs.org/react-is/-/react-is-18.2.0.tgz",[m
+       "integrity": "sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w=="[m
+     },[m
+[32m+[m[32m    "node_modules/@mui/x-date-pickers": {[m
+[32m+[m[32m      "version": "5.0.0-beta.2",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/@mui/x-date-pickers/-/x-date-pickers-5.0.0-beta.2.tgz",[m
+[32m+[m[32m      "integrity": "sha512-UEXQ2tmhosklAQwOUtwQBI2WngSdp5Q8vYqsmvxNJxuXYuM/DawdQBwyfFyK7jx5wf/RTsniG1e12hqii3wPYg==",[m
+[32m+[m[32m      "dependencies": {[m
+[32m+[m[32m        "@babel/runtime": "^7.18.6",[m
+[32m+[m[32m        "@date-io/core": "^2.14.0",[m
+[32m+[m[32m        "@date-io/date-fns": "^2.14.0",[m
+[32m+[m[32m        "@date-io/dayjs": "^2.14.0",[m
+[32m+[m[32m        "@date-io/luxon": "^2.14.0",[m
+[32m+[m[32m        "@date-io/moment": "^2.14.0",[m
+[32m+[m[32m        "@mui/utils": "^5.4.1",[m
+[32m+[m[32m        "@types/react-transition-group": "^4.4.5",[m
+[32m+[m[32m        "clsx": "^1.2.1",[m
+[32m+[m[32m        "prop-types": "^15.7.2",[m
+[32m+[m[32m        "react-transition-group": "^4.4.2",[m
+[32m+[m[32m        "rifm": "^0.12.1"[m
+[32m+[m[32m      },[m
+[32m+[m[32m      "engines": {[m
+[32m+[m[32m        "node": ">=12.0.0"[m
+[32m+[m[32m      },[m
+[32m+[m[32m      "funding": {[m
+[32m+[m[32m        "type": "opencollective",[m
+[32m+[m[32m        "url": "https://opencollective.com/mui"[m
+[32m+[m[32m      },[m
+[32m+[m[32m      "peerDependencies": {[m
+[32m+[m[32m        "@emotion/react": "^11.9.0",[m
+[32m+[m[32m        "@emotion/styled": "^11.8.1",[m
+[32m+[m[32m        "@mui/material": "^5.4.1",[m
+[32m+[m[32m        "@mui/system": "^5.4.1",[m
+[32m+[m[32m        "date-fns": "^2.25.0",[m
+[32m+[m[32m        "dayjs": "^1.10.7",[m
+[32m+[m[32m        "luxon": "^1.28.0 || ^2.0.0 || ^3.0.0",[m
+[32m+[m[32m        "moment": "^2.29.1",[m
+[32m+[m[32m        "react": "^17.0.2 || ^18.0.0"[m
+[32m+[m[32m      },[m
+[32m+[m[32m      "peerDependenciesMeta": {[m
+[32m+[m[32m        "@emotion/react": {[m
+[32m+[m[32m          "optional": true[m
+[32m+[m[32m        },[m
+[32m+[m[32m        "@emotion/styled": {[m
+[32m+[m[32m          "optional": true[m
+[32m+[m[32m        },[m
+[32m+[m[32m        "date-fns": {[m
+[32m+[m[32m          "optional": true[m
+[32m+[m[32m        },[m
+[32m+[m[32m        "dayjs": {[m
+[32m+[m[32m          "optional": true[m
+[32m+[m[32m        },[m
+[32m+[m[32m        "luxon": {[m
+[32m+[m[32m          "optional": true[m
+[32m+[m[32m        },[m
+[32m+[m[32m        "moment": {[m
+[32m+[m[32m          "optional": true[m
+[32m+[m[32m        }[m
+[32m+[m[32m      }[m
+[32m+[m[32m    },[m
+[32m+[m[32m    "node_modules/@mui/x-date-pickers-pro": {[m
+[32m+[m[32m      "version": "5.0.0-beta.2",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/@mui/x-date-pickers-pro/-/x-date-pickers-pro-5.0.0-beta.2.tgz",[m
+[32m+[m[32m      "integrity": "sha512-YUIwtHMoroheQkZJFE3cc8cbIDWPDqEYEQPelgwZU+DAZDwNLsW3g03zWevHUqFv+kz8WnEkjjGe7tcxdx/srw==",[m
+[32m+[m[32m      "dependencies": {[m
+[32m+[m[32m        "@babel/runtime": "^7.18.6",[m
+[32m+[m[32m        "@date-io/date-fns": "^2.14.0",[m
+[32m+[m[32m        "@date-io/dayjs": "^2.14.0",[m
+[32m+[m[32m        "@date-io/luxon": "^2.14.0",[m
+[32m+[m[32m        "@date-io/moment": "^2.14.0",[m
+[32m+[m[32m        "@mui/utils": "^5.4.1",[m
+[32m+[m[32m        "@mui/x-date-pickers": "5.0.0-beta.2",[m
+[32m+[m[32m        "@mui/x-license-pro": "5.12.1",[m
+[32m+[m[32m        "clsx": "^1.2.1",[m
+[32m+[m[32m        "prop-types": "^15.7.2",[m
+[32m+[m[32m        "react-transition-group": "^4.4.2",[m
+[32m+[m[32m        "rifm": "^0.12.1"[m
+[32m+[m[32m      },[m
+[32m+[m[32m      "engines": {[m
+[32m+[m[32m        "node": ">=12.0.0"[m
+[32m+[m[32m      },[m
+[32m+[m[32m      "peerDependencies": {[m
+[32m+[m[32m        "@mui/material": "^5.4.1",[m
+[32m+[m[32m        "@mui/system": "^5.4.1",[m
+[32m+[m[32m        "date-fns": "^2.25.0",[m
+[32m+[m[32m        "dayjs": "^1.10.7",[m
+[32m+[m[32m        "luxon": "^1.28.0 || ^2.0.0 || ^3.0.0",[m
+[32m+[m[32m        "moment": "^2.29.1",[m
+[32m+[m[32m        "react": "^17.0.2 || ^18.0.0"[m
+[32m+[m[32m      },[m
+[32m+[m[32m      "peerDependenciesMeta": {[m
+[32m+[m[32m        "date-fns": {[m
+[32m+[m[32m          "optional": true[m
+[32m+[m[32m        },[m
+[32m+[m[32m        "dayjs": {[m
+[32m+[m[32m          "optional": true[m
+[32m+[m[32m        },[m
+[32m+[m[32m        "luxon": {[m
+[32m+[m[32m          "optional": tru
