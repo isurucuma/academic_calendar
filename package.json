@@ -1,27 +1,4 @@
 {
-<<<<<<< HEAD
-    "name": "academic-calendar",
-    "version": "0.0.0",
-    "private": true,
-    "scripts": {
-        "start": "nodemon server.js",
-        "test": "jest"
-    },
-    "dependencies": {
-        "axios": "^0.27.2",
-        "cookie-parser": "~1.4.4",
-        "debug": "~2.6.9",
-        "dotenv": "^16.0.1",
-        "express": "~4.16.1",
-        "mongoose": "^6.4.4",
-        "morgan": "~1.9.1",
-        "nodemon": "^2.0.19"
-    },
-    "devDependencies": {
-        "jest": "^28.1.2",
-        "supertest": "^6.2.4"
-    }
-=======
   "name": "academic-calendar",
   "version": "0.0.0",
   "private": true,
@@ -30,6 +7,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "axios": "^0.27.2",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
@@ -43,5 +21,4 @@
     "jest": "^28.1.2",
     "supertest": "^6.2.4"
   }
->>>>>>> 0036b1ac1506ed9806ba93a3fa9acee82909e826
 }

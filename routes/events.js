@@ -1,56 +1,6 @@
 var express = require("express");
 var router = express.Router();
-<<<<<<< HEAD
 const { sendNotfications, getAllStudents } = require("../extras/helperMethods");
-
-const Event = new mongoose.model(
-    "events",
-    new mongoose.Schema({
-        title: {
-            type: String,
-            required: true,
-        },
-        startDate: {
-            type: Date,
-            required: true,
-        },
-        endDate: {
-            type: Date,
-            required: true,
-        },
-        description: {
-            type: String,
-            required: true,
-        },
-        batch: {
-            type: String,
-        },
-    })
-);
-
-/* POST event. */
-router.post("/create", async (req, res, next) => {
-    try {
-        let event = new Event({
-            title: req.body.title,
-            startDate: req.body.startDate,
-            endDate: req.body.endDate,
-            description: req.body.description,
-            batch: req.body.batch,
-        });
-        // if event title has exam, semester, registration, or other similar words, then send notification to all students
-        if (req.body.title.includes("62e0226ae94516d45d442f15")) {
-            const emails = await getAllStudents();
-            const message = `${req.body.description} is coming up! for ${req.body.batch} on ${req.body.startDate}`;
-            const data = await sendNotfications(emails, message);
-            //res.send(data);
-        }
-        event = await Event.create(event);
-        res.send(event).status(200);
-    } catch (error) {
-        res.send(error.message).status(400);
-    }
-=======
 const Event = require("../Database/Models/events");
 const EventCategory = require("../Database/Models/eventCategory");
 
@@ -64,12 +14,18 @@ router.post("/create", async (req, res, next) => {
       description: req.body.description,
       batch: req.body.batch,
     });
+    // if event title has exam, semester, registration, or other similar words, then send notification to all students
+    if (req.body.title.includes("62e0226ae94516d45d442f15")) {
+      const emails = await getAllStudents();
+      const message = `${req.body.description} is coming up! for ${req.body.batch} on ${req.body.startDate}`;
+      const data = await sendNotfications(emails, message);
+      //res.send(data);
+    }
     event = await Event.create(event);
     res.send(event).status(200);
   } catch (error) {
     res.send(error.message).status(400);
   }
->>>>>>> 0036b1ac1506ed9806ba93a3fa9acee82909e826
 });
 
 /* GET events listing. */
@@ -114,15 +70,9 @@ router.put("/update/:id", async (req, res, next) => {
 });
 
 /* delete event listing. */
-<<<<<<< HEAD
 router.delete("/delete/:id", async (req, res, next) => {
-    try {
-        const entry = await Event.findById(req.params.id);
-=======
-router.delete("/update/:id", async (req, res, next) => {
   try {
     const entry = await Event.findById(req.params.id);
->>>>>>> 0036b1ac1506ed9806ba93a3fa9acee82909e826
 
     if (!entry) {
       res.send("Event doesn't exist").status(400);
