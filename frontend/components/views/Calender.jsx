@@ -94,7 +94,7 @@ function getDatesInRange(startDate, endDate) {
 
 function Calender() {
   const [data, setData] = React.useState()
-  const [color, setColor] = React.useState('')
+  // const [color, setColor] = React.useState('')
   // console.log(color)
 
   React.useEffect(() => {
@@ -107,43 +107,43 @@ function Calender() {
           new Date(item.event.endDate)
         )
 
-        switch (item.event.eventTitle) {
-          case 'Vacation':
-            setColor('border-green-500')
-            break
-          case 'Examination':
-            setColor('border-blue-500')
-            break
-          case 'Dead week':
-            setColor('border-orange-500')
-            break
-          case 'Vacation':
-            setColor('border-green-500')
-            break
-          case 'Industrial training special 2':
-            setColor('border-gray-500')
-            break
-          case 'Industrial training special 1':
-            setColor('border-black')
-            break
-          case 'Final exam ending week':
-            setColor('border-red-500')
-            break
-          case 'Survey camp':
-            setColor('border-yellow-500')
-            break
-          case 'Soft skill development pro':
-            setColor('border-pink-500')
-            break
-          case 'General elective special':
-            setColor('border-orange-900')
-            break
-          case 'Online classes':
-            setColor('border-purple-500')
-            break
-          default:
-            setColor('border-blue-500')
-        }
+        // switch (item.event.eventTitle) {
+        //   case 'Vacation':
+        //     setColor('border-green-500')
+        //     break
+        //   case 'Examination':
+        //     setColor('border-blue-500')
+        //     break
+        //   case 'Dead week':
+        //     setColor('border-orange-500')
+        //     break
+        //   case 'Vacation':
+        //     setColor('border-green-500')
+        //     break
+        //   case 'Industrial training special 2':
+        //     setColor('border-gray-500')
+        //     break
+        //   case 'Industrial training special 1':
+        //     setColor('border-black')
+        //     break
+        //   case 'Final exam ending week':
+        //     setColor('border-red-500')
+        //     break
+        //   case 'Survey camp':
+        //     setColor('border-yellow-500')
+        //     break
+        //   case 'Soft skill development pro':
+        //     setColor('border-pink-500')
+        //     break
+        //   case 'General elective special':
+        //     setColor('border-orange-900')
+        //     break
+        //   case 'Online classes':
+        //     setColor('border-purple-500')
+        //     break
+        //   default:
+        //     setColor('border-blue-500')
+        // }
         return { ...item, dates }
       })
 
@@ -323,10 +323,7 @@ function Calender() {
               ) : (
                 <p>No meetings for today.</p>
               )}
-              {data &&
-                selectedDayMeetings.map((day) => {
-                  // console.log(day)
-                })}
+
               {/* {selectedDayMeetings.length > 0 ? (
                 selectedDayMeetings.map((meeting) => (
                   <Meeting meeting={meeting} key={meeting.id} />

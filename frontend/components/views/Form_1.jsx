@@ -1,6 +1,7 @@
 import React from 'react'
 import Button from '@mui/material/Button'
 import AddBoxIcon from '@mui/icons-material/AddBox'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { addContext } from './../../pages/index'
 import axios from 'axios'
 function Form_1() {
@@ -143,6 +144,14 @@ function Form_1() {
         <div className="col-md-12">
           <Button type="submit" variant="outlined" startIcon={<AddBoxIcon />}>
             Add
+          </Button>
+          <Button
+            className="ml-3"
+            onClick={(e) => state.setFlags(false)}
+            variant="outlined"
+            startIcon={<ArrowBackIcon />}
+          >
+            Back
           </Button>
         </div>
       </form>
