@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 var express = require("express");
 var router = express.Router();
+const { sendNotfications, getAllStudents } = require("../extras/helperMethods");
 
 const Event = new mongoose.model(
     "events",
@@ -37,6 +38,13 @@ router.post("/create", async (req, res, next) => {
             description: req.body.description,
             batch: req.body.batch,
         });
+        // if event title has exam, semester, registration, or other similar words, then send notification to all students
+        if (req.body.title.includes("62e0226ae94516d45d442f15")) {
+            const emails = await getAllStudents();
+            const message = `${req.body.description} is coming up! for ${req.body.batch} on ${req.body.startDate}`;
+            const data = await sendNotfications(emails, message);
+            //res.send(data);
+        }
         event = await Event.create(event);
         res.send(event).status(200);
     } catch (error) {
@@ -77,7 +85,7 @@ router.put("/update/:id", async (req, res, next) => {
 });
 
 /* delete event listing. */
-router.delete("/update/:id", async (req, res, next) => {
+router.delete("/delete/:id", async (req, res, next) => {
     try {
         const entry = await Event.findById(req.params.id);
 
