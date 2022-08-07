@@ -321,7 +321,7 @@ function Calender() {
                   <Meeting data={data.event} key={data.event._id} />
                 ))
               ) : (
-                <p>No meetings for today.</p>
+                <p className="px-4 text-gray-900 py-">No meetings for today.</p>
               )}
 
               {/* {selectedDayMeetings.length > 0 ? (

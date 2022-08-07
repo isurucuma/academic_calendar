@@ -5,7 +5,16 @@ export const addContext = createContext()
 
 export default function Example() {
   const [flag, setFlags] = useState(false)
+  const [isUpdate, setIsUpdate] = useState(false)
   const [date, setDate] = useState({ startDate: '', endDate: '' })
+  const [data, setData] = React.useState({
+    id: '',
+    startDate: '',
+    endDate: '',
+    batch: '',
+    description: '',
+    title: '',
+  })
 
   return (
     <div className="container">
@@ -17,7 +26,18 @@ export default function Example() {
           {flag ? (
             <>
               <div className="col-span-7 h-96">
-                <addContext.Provider value={{ setFlags, flag, setDate, date }}>
+                <addContext.Provider
+                  value={{
+                    setFlags,
+                    flag,
+                    setDate,
+                    date,
+                    data,
+                    setData,
+                    isUpdate,
+                    setIsUpdate,
+                  }}
+                >
                   <Calender />
                 </addContext.Provider>
               </div>
@@ -28,7 +48,18 @@ export default function Example() {
                 <Legend />
               </div>
               <div className="col-span-5 h-96">
-                <addContext.Provider value={{ setFlags, flag }}>
+                <addContext.Provider
+                  value={{
+                    setFlags,
+                    flag,
+                    setDate,
+                    date,
+                    data,
+                    setData,
+                    isUpdate,
+                    setIsUpdate,
+                  }}
+                >
                   <Calender />
                 </addContext.Provider>
               </div>

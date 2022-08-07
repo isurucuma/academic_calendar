@@ -1,8 +1,9 @@
 import { Menu, Transition } from '@headlessui/react'
 import { DotsVerticalIcon } from '@heroicons/react/outline'
 // import { format, parseISO } from 'date-fns'
-import { Fragment, useContext } from 'react'
+import React, { Fragment, useContext } from 'react'
 import { addContext } from '../../pages'
+import axios from 'axios'
 
 export default function Meeting({ data }) {
   const state = useContext(addContext)
@@ -12,6 +13,13 @@ export default function Meeting({ data }) {
 
   // let startDateTime = parseISO(meeting.startDatetime)
   // let endDateTime = parseISO(meeting.endDatetime)
+
+  const deleteEvent = async (event) => {
+    const res = await axios.delete(
+      `http://localhost:3001/api/events/delete/${event}`
+    )
+    window.location.reload()
+  }
 
   return (
     <li className="flex items-center px-4 py-2 space-x-4 group rounded-xl focus-within:bg-gray-100 hover:bg-gray-100">
@@ -67,8 +75,16 @@ export default function Meeting({ data }) {
                       'block px-4 py-2 text-sm'
                     )}
                     onClick={() => {
-                      console.log(state)
+                      state.setIsUpdate(true)
                       state.setFlags(true)
+                      state.setData({
+                        id: data._id,
+                        startDate: data.startDate.split('T')[0],
+                        endDate: data.endDate.split('T')[0],
+                        batch: data.batch,
+                        description: data.description,
+                        title: data.title,
+                      })
                     }}
                   >
                     Edit
@@ -79,6 +95,7 @@ export default function Meeting({ data }) {
                 {({ active }) => (
                   <a
                     href="#"
+                    onClick={() => deleteEvent(data._id)}
                     className={classNames(
                       active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                       'block px-4 py-2 text-sm'
