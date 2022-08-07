@@ -15,9 +15,7 @@ export default function Meeting({ data }) {
   // let endDateTime = parseISO(meeting.endDatetime)
 
   const deleteEvent = async (event) => {
-    const res = await axios.delete(
-      `http://localhost:3001/api/events/delete/${event}`
-    )
+    await axios.delete(`http://localhost:3001/api/events/delete/${event}`)
     window.location.reload()
   }
 

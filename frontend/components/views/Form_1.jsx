@@ -1,16 +1,22 @@
 import React from 'react'
+
 import Button from '@mui/material/Button'
 import AddBoxIcon from '@mui/icons-material/AddBox'
 import EditIcon from '@mui/icons-material/Edit'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+
+import Backdrop from '@mui/material/Backdrop'
+import CircularProgress from '@mui/material/CircularProgress'
+
 import { addContext } from './../../pages/index'
 import axios from 'axios'
 function Form_1() {
   const state = React.useContext(addContext)
+  const [open, setOpen] = React.useState(false)
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(state.data)
+    setOpen(true)
     if (!state.isUpdate) {
       axios
         .post(`http://localhost:3001/api/events/create`, state.data)
@@ -24,6 +30,7 @@ function Form_1() {
             description: '',
             title: '',
           })
+          setOpen(false)
           alert('event added')
           state.setFlags(false)
         })
@@ -43,6 +50,7 @@ function Form_1() {
             description: '',
             title: '',
           })
+          setOpen(false)
           alert('event updated')
           state.setFlags(false)
           state.setIsUpdate(false)
@@ -53,6 +61,12 @@ function Form_1() {
 
   return (
     <div>
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <form
         method="POST"
         id="contactForm"
