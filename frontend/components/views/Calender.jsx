@@ -236,6 +236,7 @@ function Calender() {
             >
               {data ? (
                 <>
+                  {console.log(data)}
                   <button
                     type="button"
                     onClick={() => setSelectedDay(day)}
@@ -321,7 +322,7 @@ function Calender() {
                   <Meeting data={data.event} key={data.event._id} />
                 ))
               ) : (
-                <p className="px-4 text-gray-900 py-">No meetings for today.</p>
+                <p className="px-4 text-gray-900 py-">No events for today.</p>
               )}
 
               {/* {selectedDayMeetings.length > 0 ? (

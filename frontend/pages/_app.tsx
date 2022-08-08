@@ -10,7 +10,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <NavBar />
       </div>
 
-      <div className="flex flex-wrap col-span-2 ">
+      <div className="flex flex-wrap col-span-2 overflow-hidden">
         <Component {...pageProps} />
       </div>
       <div className="col-span-1 mt-auto">

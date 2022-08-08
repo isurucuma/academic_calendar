@@ -25,7 +25,7 @@ export default function Example() {
         <div className="flex grid-cols-1 gap-4 md:grid md:grid-cols-7">
           {flag ? (
             <>
-              <div className="col-span-7 h-96">
+              <div className="h-96 md:col-span-7">
                 <addContext.Provider
                   value={{
                     setFlags,
@@ -44,10 +44,10 @@ export default function Example() {
             </>
           ) : (
             <>
-              <div className="col-span-2 h-96">
+              <div className="h-96 md:col-span-2">
                 <Legend />
               </div>
-              <div className="col-span-5 h-96">
+              <div className="h-96 md:col-span-5">
                 <addContext.Provider
                   value={{
                     setFlags,
