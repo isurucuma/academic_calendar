@@ -5,27 +5,27 @@ const mongoose = require("mongoose");
 describe("DB CRUD Operations", () => {
     // get all events
     test("GET -> /events --> array of events", () => {
-        return (
-            request(app)
-                .get("/api/events")
-                //.expect("Content-Type", /json/)
-                .expect(200)
-                .then((response) => {
-                    expect(response.body).toEqual(
-                        expect.arrayContaining([
-                            expect.objectContaining({
+        return request(app)
+            .get("/api/events")
+            .expect("Content-Type", /json/)
+            .expect(200)
+            .then((response) => {
+                expect(response.body).toEqual(
+                    expect.arrayContaining([
+                        expect.objectContaining({
+                            event: expect.objectContaining({
                                 _id: expect.any(String),
-                                title: expect.any(String),
+                                eventTitle: expect.any(String),
                                 startDate: expect.any(String),
                                 endDate: expect.any(String),
                                 description: expect.any(String),
                                 batch: expect.any(String),
                                 __v: expect.any(Number),
                             }),
-                        ])
-                    );
-                })
-        );
+                        }),
+                    ])
+                );
+            });
     });
 
     let newId;
@@ -132,9 +132,10 @@ describe("Notifications", () => {
             .expect("Content-Type", "text/html; charset=utf-8")
             .expect(200)
             .then((data) => {
-                expect.objectContaining({
-                    message: "Notification sent successfully",
-                });
+                // expect.objectContaining({
+                //     message: "Notification sent successfully",
+                // });
+                console.log(data);
             });
     });
 });
