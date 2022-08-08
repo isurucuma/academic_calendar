@@ -58,54 +58,17 @@ function Calender() {
     async function getData() {
       const { data } = await axios.get(`http://localhost:3001/api/events/`)
 
-      // const event = data.map((item) => {
-      //   const dates = getDatesInRange(
-      //     new Date(item.event.startDate),
-      //     new Date(item.event.endDate)
-      //   )
+      const event = data.map((item) => {
+        const dates = getDatesInRange(
+          new Date(item.event.startDate),
+          new Date(item.event.endDate)
+        )
 
-      // switch (item.event.eventTitle) {
-      //   case 'Vacation':
-      //     setColor('border-green-500')
-      //     break
-      //   case 'Examination':
-      //     setColor('border-blue-500')
-      //     break
-      //   case 'Dead week':
-      //     setColor('border-orange-500')
-      //     break
-      //   case 'Vacation':
-      //     setColor('border-green-500')
-      //     break
-      //   case 'Industrial training special 2':
-      //     setColor('border-gray-500')
-      //     break
-      //   case 'Industrial training special 1':
-      //     setColor('border-black')
-      //     break
-      //   case 'Final exam ending week':
-      //     setColor('border-red-500')
-      //     break
-      //   case 'Survey camp':
-      //     setColor('border-yellow-500')
-      //     break
-      //   case 'Soft skill development pro':
-      //     setColor('border-pink-500')
-      //     break
-      //   case 'General elective special':
-      //     setColor('border-orange-900')
-      //     break
-      //   case 'Online classes':
-      //     setColor('border-purple-500')
-      //     break
-      //   default:
-      //     setColor('border-blue-500')
-      // }
-      //   return { ...item, dates }
-      // })
+        return { ...item, dates }
+      })
 
-      // setData(event)
-      setData(data)
+      setData(event)
+      // setData(data)
     }
     getData()
   }, [])
@@ -195,9 +158,40 @@ function Calender() {
               {data ? (
                 <>
                   <button
+                    id="date-button"
                     type="button"
                     onClick={() => {
-                      console.log(data)
+                      // let res = data.map((event) => {
+
+                      // const offset = day.getTimezoneOffset()
+                      // day = new Date(day.getTime() - offset * 60 * 1000)
+
+                      // console.log(
+                      //   data[0].dates.some((date) => {
+                      //     date.toISOString().split('T')[0] ===
+                      //       day.toISOString().split('T')[0] &&
+                      //       data[0].event.eventTitle === 'Survey camp'
+                      //   })
+                      // )
+                      // console.log(data[0].dates[0].toISOString().split('T')[0])
+                      // console.log(
+                      //   day.toISOString().split('T')[0] ===
+                      //     data[0].dates[0].toISOString().split('T')[0]
+                      // )
+
+                      // console.log(
+                      //   data.some((meeting) => {
+                      //     let res = meeting.dates.some((date) => {
+                      //       if (
+                      //         day.toISOString().split('T')[0] ===
+                      //           date.toISOString().split('T')[0] &&
+                      //         meeting.event.eventTitle === 'Survey camp'
+                      //       )
+                      //         return true
+                      //     })
+                      //     return res
+                      //   })
+                      // )
 
                       setSelectedDay(day)
                     }}
@@ -275,6 +269,121 @@ function Calender() {
                           isSameDay(parseISO(meeting.event.startDate), day) &&
                           meeting.event.eventTitle === 'Online classes'
                       ) && 'solid border-2 border-purple-500',
+                      data.some((meeting) => {
+                        let res = meeting.dates.some((date) => {
+                          if (
+                            day.toISOString().split('T')[0] ===
+                              date.toISOString().split('T')[0] &&
+                            meeting.event.eventTitle === 'Survey camp'
+                          )
+                            return true
+                        })
+                        return res
+                      }) && 'solid border-2 border-yellow-500',
+                      data.some((meeting) => {
+                        let res = meeting.dates.some((date) => {
+                          if (
+                            day.toISOString().split('T')[0] ===
+                              date.toISOString().split('T')[0] &&
+                            meeting.event.eventTitle === 'Online classes'
+                          )
+                            return true
+                        })
+                        return res
+                      }) && 'solid border-2 border-purple-500',
+                      data.some((meeting) => {
+                        let res = meeting.dates.some((date) => {
+                          if (
+                            day.toISOString().split('T')[0] ===
+                              date.toISOString().split('T')[0] &&
+                            meeting.event.eventTitle ===
+                              'General elective special'
+                          )
+                            return true
+                        })
+                        return res
+                      }) && 'solid border-2 border-orange-900',
+                      data.some((meeting) => {
+                        let res = meeting.dates.some((date) => {
+                          if (
+                            day.toISOString().split('T')[0] ===
+                              date.toISOString().split('T')[0] &&
+                            meeting.event.eventTitle ===
+                              'Soft skill development pro'
+                          )
+                            return true
+                        })
+                        return res
+                      }) && 'solid border-2 border-pink-500',
+                      data.some((meeting) => {
+                        let res = meeting.dates.some((date) => {
+                          if (
+                            day.toISOString().split('T')[0] ===
+                              date.toISOString().split('T')[0] &&
+                            meeting.event.eventTitle ===
+                              'Final exam ending week'
+                          )
+                            return true
+                        })
+                        return res
+                      }) && 'solid border-2 border-red-500',
+                      data.some((meeting) => {
+                        let res = meeting.dates.some((date) => {
+                          if (
+                            day.toISOString().split('T')[0] ===
+                              date.toISOString().split('T')[0] &&
+                            meeting.event.eventTitle ===
+                              'Industrial training special 2'
+                          )
+                            return true
+                        })
+                        return res
+                      }) && 'solid border-2 border-gray-500',
+                      data.some((meeting) => {
+                        let res = meeting.dates.some((date) => {
+                          if (
+                            day.toISOString().split('T')[0] ===
+                              date.toISOString().split('T')[0] &&
+                            meeting.event.eventTitle ===
+                              'Industrial training special 1'
+                          )
+                            return true
+                        })
+                        return res
+                      }) && 'solid border-2 border-black',
+                      data.some((meeting) => {
+                        let res = meeting.dates.some((date) => {
+                          if (
+                            day.toISOString().split('T')[0] ===
+                              date.toISOString().split('T')[0] &&
+                            meeting.event.eventTitle === 'Vacation'
+                          )
+                            return true
+                        })
+                        return res
+                      }) && 'solid border-2 border-green-500',
+                      data.some((meeting) => {
+                        let res = meeting.dates.some((date) => {
+                          if (
+                            day.toISOString().split('T')[0] ===
+                              date.toISOString().split('T')[0] &&
+                            meeting.event.eventTitle === 'Examination'
+                          )
+                            return true
+                        })
+                        return res
+                      }) && 'solid border-2 border-blue-500',
+                      data.some((meeting) => {
+                        let res = meeting.dates.some((date) => {
+                          if (
+                            day.toISOString().split('T')[0] ===
+                              date.toISOString().split('T')[0] &&
+                            meeting.event.eventTitle === 'Dead week'
+                          )
+                            return true
+                        })
+                        return res
+                      }) && 'solid border-2 border-orange-500',
                       'solid day-btn mx-auto flex h-10 w-10 items-center justify-center rounded-full'
                     )}
                   >
@@ -282,6 +391,7 @@ function Calender() {
                       {format(day, 'd')}
                     </time>
                   </button>
+                  {/* {console.log(data)} */}
                 </>
               ) : (
                 <></>
