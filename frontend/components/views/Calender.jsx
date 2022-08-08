@@ -195,6 +195,7 @@ function Calender() {
 
                       setSelectedDay(day)
                     }}
+                    //"additional day colord+event not shown in all days"
                     className={classNames(
                       isEqual(day, selectedDay) && 'text-white',
                       !isEqual(day, selectedDay) &&
