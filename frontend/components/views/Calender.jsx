@@ -22,49 +22,6 @@ import Meeting from './Meeting'
 import { addContext } from '../../pages'
 import Form_1 from './Form_1'
 
-// const meetings = [
-//   {
-//     id: 1,
-//     name: 'Leslie Alexander',
-//     imageUrl:
-//       'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-//     startDatetime: '2022-05-11T13:00',
-//     endDatetime: '2022-05-11T14:30',
-//   },
-//   {
-//     id: 2,
-//     name: 'Michael Foster',
-//     imageUrl:
-//       'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-//     startDatetime: '2022-05-20T09:00',
-//     endDatetime: '2022-05-20T11:30',
-//   },
-//   {
-//     id: 3,
-//     name: 'Dries Vincent',
-//     imageUrl:
-//       'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-//     startDatetime: '2022-05-20T17:00',
-//     endDatetime: '2022-05-20T18:30',
-//   },
-//   {
-//     id: 4,
-//     name: 'Leslie Alexander',
-//     imageUrl:
-//       'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-//     startDatetime: '2022-07-28T07:45:18.225Z',
-//     endDatetime: '2022-06-09T14:30',
-//   },
-//   {
-//     id: 5,
-//     name: 'Michael Foster',
-//     imageUrl:
-//       'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-//     startDatetime: '2022-07-13T14:00',
-//     endDatetime: '2022-05-13T14:30',
-//   },
-// ]
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
@@ -107,47 +64,11 @@ function Calender() {
           new Date(item.event.endDate)
         )
 
-        // switch (item.event.eventTitle) {
-        //   case 'Vacation':
-        //     setColor('border-green-500')
-        //     break
-        //   case 'Examination':
-        //     setColor('border-blue-500')
-        //     break
-        //   case 'Dead week':
-        //     setColor('border-orange-500')
-        //     break
-        //   case 'Vacation':
-        //     setColor('border-green-500')
-        //     break
-        //   case 'Industrial training special 2':
-        //     setColor('border-gray-500')
-        //     break
-        //   case 'Industrial training special 1':
-        //     setColor('border-black')
-        //     break
-        //   case 'Final exam ending week':
-        //     setColor('border-red-500')
-        //     break
-        //   case 'Survey camp':
-        //     setColor('border-yellow-500')
-        //     break
-        //   case 'Soft skill development pro':
-        //     setColor('border-pink-500')
-        //     break
-        //   case 'General elective special':
-        //     setColor('border-orange-900')
-        //     break
-        //   case 'Online classes':
-        //     setColor('border-purple-500')
-        //     break
-        //   default:
-        //     setColor('border-blue-500')
-        // }
         return { ...item, dates }
       })
 
       setData(event)
+      // setData(data)
     }
     getData()
   }, [])
@@ -237,8 +158,44 @@ function Calender() {
               {data ? (
                 <>
                   <button
+                    id="date-button"
                     type="button"
-                    onClick={() => setSelectedDay(day)}
+                    onClick={() => {
+                      // let res = data.map((event) => {
+
+                      // const offset = day.getTimezoneOffset()
+                      // day = new Date(day.getTime() - offset * 60 * 1000)
+
+                      // console.log(
+                      //   data[0].dates.some((date) => {
+                      //     date.toISOString().split('T')[0] ===
+                      //       day.toISOString().split('T')[0] &&
+                      //       data[0].event.eventTitle === 'Survey camp'
+                      //   })
+                      // )
+                      // console.log(data[0].dates[0].toISOString().split('T')[0])
+                      // console.log(
+                      //   day.toISOString().split('T')[0] ===
+                      //     data[0].dates[0].toISOString().split('T')[0]
+                      // )
+
+                      // console.log(
+                      //   data.some((meeting) => {
+                      //     let res = meeting.dates.some((date) => {
+                      //       if (
+                      //         day.toISOString().split('T')[0] ===
+                      //           date.toISOString().split('T')[0] &&
+                      //         meeting.event.eventTitle === 'Survey camp'
+                      //       )
+                      //         return true
+                      //     })
+                      //     return res
+                      //   })
+                      // )
+
+                      setSelectedDay(day)
+                    }}
+                    //"additional day colord+event not shown in all days"
                     className={classNames(
                       isEqual(day, selectedDay) && 'text-white',
                       !isEqual(day, selectedDay) &&
@@ -259,9 +216,175 @@ function Calender() {
                       !isEqual(day, selectedDay) && 'hover:bg-gray-200',
                       (isEqual(day, selectedDay) || isToday(day)) &&
                         'font-bold',
-                      data.some((meeting) =>
-                        isSameDay(parseISO(meeting.event.startDate), day)
-                      ) && `solid border-2 border-purple-500`,
+                      data.some(
+                        (meeting) =>
+                          isSameDay(parseISO(meeting.event.startDate), day) &&
+                          meeting.event.eventTitle === 'Examination'
+                      ) && 'solid border-2 border-blue-500',
+                      data.some(
+                        (meeting) =>
+                          isSameDay(parseISO(meeting.event.startDate), day) &&
+                          meeting.event.eventTitle === 'Dead week'
+                      ) && 'solid border-2 border-orange-500',
+                      data.some(
+                        (meeting) =>
+                          isSameDay(parseISO(meeting.event.startDate), day) &&
+                          meeting.event.eventTitle === 'Vacation'
+                      ) && 'solid border-2 border-green-500',
+                      data.some(
+                        (meeting) =>
+                          isSameDay(parseISO(meeting.event.startDate), day) &&
+                          meeting.event.eventTitle ===
+                            'Industrial training special 1'
+                      ) && 'solid border-2 border-black',
+                      data.some(
+                        (meeting) =>
+                          isSameDay(parseISO(meeting.event.startDate), day) &&
+                          meeting.event.eventTitle ===
+                            'Industrial training special 2'
+                      ) && 'solid border-2 border-gray-500',
+                      data.some(
+                        (meeting) =>
+                          isSameDay(parseISO(meeting.event.startDate), day) &&
+                          meeting.event.eventTitle === 'Final exam ending week'
+                      ) && 'solid border-2 border-red-500',
+                      data.some(
+                        (meeting) =>
+                          isSameDay(parseISO(meeting.event.startDate), day) &&
+                          meeting.event.eventTitle === 'Survey camp'
+                      ) && 'solid border-2 border-yellow-500',
+                      data.some(
+                        (meeting) =>
+                          isSameDay(parseISO(meeting.event.startDate), day) &&
+                          meeting.event.eventTitle ===
+                            'Soft skill development pro'
+                      ) && 'solid border-2 border-orange-500',
+                      data.some(
+                        (meeting) =>
+                          isSameDay(parseISO(meeting.event.startDate), day) &&
+                          meeting.event.eventTitle ===
+                            'General elective special'
+                      ) && 'solid border-2 border-orange-900',
+                      data.some(
+                        (meeting) =>
+                          isSameDay(parseISO(meeting.event.startDate), day) &&
+                          meeting.event.eventTitle === 'Online classes'
+                      ) && 'solid border-2 border-purple-500',
+                      data.some((meeting) => {
+                        let res = meeting.dates.some((date) => {
+                          if (
+                            day.toISOString().split('T')[0] ===
+                              date.toISOString().split('T')[0] &&
+                            meeting.event.eventTitle === 'Survey camp'
+                          )
+                            return true
+                        })
+                        return res
+                      }) && 'solid border-2 border-yellow-500',
+                      data.some((meeting) => {
+                        let res = meeting.dates.some((date) => {
+                          if (
+                            day.toISOString().split('T')[0] ===
+                              date.toISOString().split('T')[0] &&
+                            meeting.event.eventTitle === 'Online classes'
+                          )
+                            return true
+                        })
+                        return res
+                      }) && 'solid border-2 border-purple-500',
+                      data.some((meeting) => {
+                        let res = meeting.dates.some((date) => {
+                          if (
+                            day.toISOString().split('T')[0] ===
+                              date.toISOString().split('T')[0] &&
+                            meeting.event.eventTitle ===
+                              'General elective special'
+                          )
+                            return true
+                        })
+                        return res
+                      }) && 'solid border-2 border-orange-900',
+                      data.some((meeting) => {
+                        let res = meeting.dates.some((date) => {
+                          if (
+                            day.toISOString().split('T')[0] ===
+                              date.toISOString().split('T')[0] &&
+                            meeting.event.eventTitle ===
+                              'Soft skill development pro'
+                          )
+                            return true
+                        })
+                        return res
+                      }) && 'solid border-2 border-pink-500',
+                      data.some((meeting) => {
+                        let res = meeting.dates.some((date) => {
+                          if (
+                            day.toISOString().split('T')[0] ===
+                              date.toISOString().split('T')[0] &&
+                            meeting.event.eventTitle ===
+                              'Final exam ending week'
+                          )
+                            return true
+                        })
+                        return res
+                      }) && 'solid border-2 border-red-500',
+                      data.some((meeting) => {
+                        let res = meeting.dates.some((date) => {
+                          if (
+                            day.toISOString().split('T')[0] ===
+                              date.toISOString().split('T')[0] &&
+                            meeting.event.eventTitle ===
+                              'Industrial training special 2'
+                          )
+                            return true
+                        })
+                        return res
+                      }) && 'solid border-2 border-gray-500',
+                      data.some((meeting) => {
+                        let res = meeting.dates.some((date) => {
+                          if (
+                            day.toISOString().split('T')[0] ===
+                              date.toISOString().split('T')[0] &&
+                            meeting.event.eventTitle ===
+                              'Industrial training special 1'
+                          )
+                            return true
+                        })
+                        return res
+                      }) && 'solid border-2 border-black',
+                      data.some((meeting) => {
+                        let res = meeting.dates.some((date) => {
+                          if (
+                            day.toISOString().split('T')[0] ===
+                              date.toISOString().split('T')[0] &&
+                            meeting.event.eventTitle === 'Vacation'
+                          )
+                            return true
+                        })
+                        return res
+                      }) && 'solid border-2 border-green-500',
+                      data.some((meeting) => {
+                        let res = meeting.dates.some((date) => {
+                          if (
+                            day.toISOString().split('T')[0] ===
+                              date.toISOString().split('T')[0] &&
+                            meeting.event.eventTitle === 'Examination'
+                          )
+                            return true
+                        })
+                        return res
+                      }) && 'solid border-2 border-blue-500',
+                      data.some((meeting) => {
+                        let res = meeting.dates.some((date) => {
+                          if (
+                            day.toISOString().split('T')[0] ===
+                              date.toISOString().split('T')[0] &&
+                            meeting.event.eventTitle === 'Dead week'
+                          )
+                            return true
+                        })
+                        return res
+                      }) && 'solid border-2 border-orange-500',
                       'solid day-btn mx-auto flex h-10 w-10 items-center justify-center rounded-full'
                     )}
                   >
@@ -269,6 +392,7 @@ function Calender() {
                       {format(day, 'd')}
                     </time>
                   </button>
+                  {/* {console.log(data)} */}
                 </>
               ) : (
                 <></>
@@ -321,7 +445,7 @@ function Calender() {
                   <Meeting data={data.event} key={data.event._id} />
                 ))
               ) : (
-                <p>No meetings for today.</p>
+                <p className="px-4 text-gray-900 py-">No events for today.</p>
               )}
 
               {/* {selectedDayMeetings.length > 0 ? (
