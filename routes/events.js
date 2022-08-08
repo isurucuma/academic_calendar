@@ -24,6 +24,7 @@ router.post("/create", async (req, res, next) => {
     event = await Event.create(event);
     res.send(event).status(200);
   } catch (error) {
+    console.log(error.message);
     res.send(error.message).status(400);
   }
 });

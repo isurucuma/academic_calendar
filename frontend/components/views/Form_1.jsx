@@ -96,6 +96,20 @@ function Form_1() {
                 <option value="62e0226ae94516d45d442f17">
                   Industrial training special 1
                 </option>
+                <option value="62e0226ae94516d45d442f18">
+                  Industrial training special 2
+                </option>
+                <option value="62e0226ae94516d45d442f19">
+                  Final exam ending week
+                </option>
+                <option value="62e0226ae94516d45d442f1a">Survey camp</option>
+                <option value="62e0226ae94516d45d442f1b">
+                  Soft skill development program
+                </option>
+                <option value="62e0226ae94516d45d442f1c">
+                  General elective special
+                </option>
+                <option value="62e0226ae94516d45d442f1d">Online classes</option>
               </select>
             </div>
             <div className="ml-4 form-group">
