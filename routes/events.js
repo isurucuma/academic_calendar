@@ -30,9 +30,11 @@ router.post("/create", async (req, res, next) => {
 });
 
 /* GET events listing. */
-router.get("/", async (req, res, next) => {
+router.get("/:batch", async (req, res, next) => {
   try {
-    let response = await Event.find();
+    let response = await Event.find({
+      batch: req.params.batch,
+    });
     const data = await Promise.all(
       response.map(async (item) => {
         const data = await EventCategory.findById(item.title);

@@ -1,7 +1,7 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useContext, useEffect } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
-
+import { filterContext } from '../../pages/_app'
 // const people = [
 //   { name: 'Wade Cooper' },
 //   { name: 'Arlene Mccoy' },
@@ -12,10 +12,15 @@ import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 // ]
 
 export default function CustomListBox(props) {
+  const state = useContext(filterContext)
   const [selected, setSelected] = useState(props.options[0])
 
+  useEffect(() => {
+    state.setFilter(selected)
+  }, [selected])
+
   return (
-    <div className={`w-${props.width}`}>
+    <div className="w-72">
       <Listbox value={selected} onChange={setSelected}>
         <div className="relative mt-1">
           <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
@@ -34,15 +39,15 @@ export default function CustomListBox(props) {
             leaveTo="opacity-0"
           >
             <Listbox.Options className="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-              {props.options.map((person, personIdx) => (
+              {props.options.map((option, i) => (
                 <Listbox.Option
-                  key={personIdx}
+                  key={i}
                   className={({ active }) =>
                     `relative cursor-default select-none py-2 pl-10 pr-4 ${
                       active ? 'bg-amber-100 text-amber-900' : 'text-gray-900'
                     }`
                   }
-                  value={person}
+                  value={option}
                 >
                   {({ selected }) => (
                     <>
@@ -51,7 +56,7 @@ export default function CustomListBox(props) {
                           selected ? 'font-medium' : 'font-normal'
                         }`}
                       >
-                        {person.name}
+                        {option.name}
                       </span>
                       {selected ? (
                         <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">

@@ -4,11 +4,11 @@ import { format, parseISO } from 'date-fns'
 import React, { Fragment, useContext } from 'react'
 import { useSession } from 'next-auth/react'
 
-import { addContext } from '../../pages'
+import { globalContext } from '../../pages'
 import axios from 'axios'
 
 export default function Meeting({ data }) {
-  const state = useContext(addContext)
+  const state = useContext(globalContext)
   const { data: session } = useSession()
 
   // console.log(data)
@@ -24,7 +24,7 @@ export default function Meeting({ data }) {
   }
 
   return (
-    <li className="flex items-center px-4 py-2 space-x-4 group rounded-xl focus-within:bg-gray-100 hover:bg-gray-100">
+    <li className="group flex items-center space-x-4 rounded-xl px-4 py-2 focus-within:bg-gray-100 hover:bg-gray-100">
       {/* <img
         src={meeting.imageUrl}
         alt=""
@@ -49,7 +49,7 @@ export default function Meeting({ data }) {
             <div>
               <Menu.Button className="-m-2 flex items-center rounded-full p-1.5 text-gray-500 hover:text-gray-600">
                 <span className="sr-only">Open options</span>
-                <DotsVerticalIcon className="w-6 h-6" aria-hidden="true" />
+                <DotsVerticalIcon className="h-6 w-6" aria-hidden="true" />
               </Menu.Button>
             </div>
 
@@ -62,7 +62,7 @@ export default function Meeting({ data }) {
               leaveFrom="transform opacity-100 scale-100"
               leaveTo="transform opacity-0 scale-95"
             >
-              <Menu.Items className="absolute right-0 z-10 mt-2 origin-top-right bg-white rounded-md shadow-lg w-36 ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <Menu.Items className="absolute right-0 z-10 mt-2 w-36 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <div className="py-1">
                   <Menu.Item>
                     {({ active }) => (

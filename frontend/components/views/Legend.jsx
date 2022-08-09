@@ -1,72 +1,94 @@
 import React from 'react'
 import axios from 'axios'
-import { addContext } from '../../pages'
-import { format } from 'date-fns'
-const legend = [
+import { globalContext } from '../../pages'
+import { filterContext } from '../../pages/_app'
+
+import { format, startOfToday } from 'date-fns'
+
+let legend = [
   {
     name: 'Dead week',
-    color: 'border-orange-500',
+    color: 'orange-500',
     topMargin: 'mt-5',
     dates: [],
+    loop: 0,
   },
   {
     name: 'Examination',
-    color: 'border-blue-500',
+    color: 'blue-500',
     topMargin: 'mt-1',
     dates: [],
+    loop: 0,
   },
-  { name: 'Vacation', color: 'border-green-500', topMargin: 'mt-1', dates: [] },
+  {
+    name: 'Vacation',
+    color: 'green-500',
+    topMargin: 'mt-1',
+    dates: [],
+    loop: 0,
+  },
   {
     name: 'Industrial training special 1',
-    color: 'border-black',
+    color: 'black',
     topMargin: 'mt-1',
     dates: [],
+    loop: 0,
   },
   {
     name: 'Industrial training special 2',
-    color: 'border-gray-500',
+    color: 'gray-500',
     topMargin: 'mt-1',
     dates: [],
+    loop: 0,
   },
   {
     name: 'Final exam ending week',
-    color: 'border-red-500',
+    color: 'red-500',
     topMargin: 'mt-1',
     dates: [],
+    loop: 0,
   },
   {
     name: 'Survey camp',
-    color: 'border-yellow-500',
+    color: 'yellow-500',
     topMargin: 'mt-1',
     dates: [],
+    loop: 0,
   },
   {
     name: 'Soft skill development program',
-    color: 'border-pink-500',
+    color: 'pink-500',
     topMargin: 'mt-1',
     dates: [],
+    loop: 0,
   },
   {
     name: 'General elective special',
-    color: 'border-orange-900',
+    color: 'orange-900',
     topMargin: 'mt-1',
     dates: [],
+    loop: 0,
   },
   {
     name: 'Online classes',
-    color: 'border-purple-500',
+    color: 'purple-500',
     topMargin: 'mt-1',
     dates: [],
+    loop: 0,
   },
 ]
 
 function Legend() {
   const [data, setData] = React.useState()
-  const state = React.useContext(addContext)
-
-  console.log(state.currentEvents)
+  const globalState = React.useContext(globalContext)
+  const filterState = React.useContext(filterContext)
 
   React.useEffect(() => {
+    legend.map((legend) => {
+      legend.dates = []
+    })
+    let today = startOfToday()
+    globalState.setCurrentMonth(format(today, 'MMM-yyyy'))
     async function getData() {
       const { data } = await axios.get(
         `http://localhost:3001/api/eventsCategory/`
@@ -74,15 +96,16 @@ function Legend() {
       setData(data)
     }
     getData()
-  }, [])
+  }, [filterState.filter])
 
-  if (state.currentEvents) {
+  if (globalState.currentEvents) {
     {
-      legend.map((item, i) => {
-        state.currentEvents.map((events, i) => {
+      legend.map((item) => {
+        globalState.currentEvents.map((events) => {
           if (
             events.event.eventTitle === item.name &&
-            !item.dates.includes(events.event.startDate)
+            !item.dates.includes(events.event.startDate) &&
+            events.event.batch === filterState.filter.name
           ) {
             return item.dates.push(events.event.startDate)
           }
@@ -96,27 +119,27 @@ function Legend() {
       {data ? (
         <>
           <div className="m-4">
-            {/* <h2 className="flex justify-center font-bold text-gray-900 ">
-              Events category
-            </h2> */}
-
             {legend.map((item, i) => {
               return (
                 <div
                   key={i}
                   className={`flex ${item.topMargin} cursor-pointer`}
                   onClick={() => {
-                    state.currentEvents.map((events, i) => {
-                      if (events.event.eventTitle === item.name) {
-                        var dt = new Date(events.event.startDate)
-                        state.setCurrentMonth(format(dt, 'MMM-yyyy'))
-                        console.log(item.dates)
-                      }
-                    })
+                    if (item.loop < item.dates.length) {
+                      var dt = new Date(item.dates[item.loop])
+                      globalState.setCurrentMonth(format(dt, 'MMM-yyyy'))
+                      item.loop++
+                    } else {
+                      item.loop = 0
+                    }
                   }}
                 >
                   <div
-                    className={`mx-auto mt-1 h-6 w-6 border-2 ${item.color} rounded-full`}
+                    className={
+                      item.dates.length > 0
+                        ? `mx-auto mt-1 h-6 w-6 border-4 border-${item.color} rounded-full bg-gray-400`
+                        : `mx-auto mt-1 h-6 w-6 border-4 border-${item.color} rounded-full`
+                    }
                   ></div>
                   <span className="flex w-3/4 py-1 text-xs">
                     {data[i].name}

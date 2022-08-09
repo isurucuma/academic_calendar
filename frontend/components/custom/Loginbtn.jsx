@@ -4,7 +4,8 @@ import Button from '@mui/material/Button'
 import { lightBlue } from '@mui/material/colors'
 
 const ColorButton = styled(Button)(({ theme }) => ({
-  backgroundColor: lightBlue[500],
+  backgroundColor: lightBlue[200],
+  borderColor: '#ffffff',
   color: theme.palette.common.white,
   '&:hover': {
     backgroundColor: lightBlue[500],
