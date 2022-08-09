@@ -112,7 +112,7 @@ function Form_1() {
                 <option value="62e0226ae94516d45d442f1d">Online classes</option>
               </select>
             </div>
-            <div className="form-group ml-4">
+            <div className="ml-4 form-group">
               <label htmlFor="#" className="mr-2">
                 Description
               </label>
@@ -166,7 +166,7 @@ function Form_1() {
                 />
               </div>
             </div>
-            <div className="form-group form-control mt-3 ml-6">
+            <div className="mt-3 ml-6 form-group form-control">
               <label htmlFor="#" className="mr-3">
                 Batch
               </label>
@@ -188,7 +188,7 @@ function Form_1() {
           </div>
         </div>
 
-        <div className="col-md-12 mt-12">
+        <div className="mt-12 col-md-12">
           {state.isUpdate ? (
             <>
               <Button type="submit" variant="outlined" startIcon={<EditIcon />}>

@@ -18,15 +18,15 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
           setFilter,
         }}
       >
-        <div className="flex flex-col min-h-screen col-4">
+        <div className="flex flex-col col-4">
           <div className="col-span-1">
             <NavBar />
           </div>
 
-          <div className="flex flex-wrap col-span-2 overflow-hidden">
+          <div className="flex flex-wrap col-span-2 ">
             <Component {...pageProps} />
           </div>
-          <div className="col-span-1 mt-auto">
+          <div className="col-span-1 mt-24">
             <Footer />
           </div>
         </div>

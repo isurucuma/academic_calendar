@@ -13,9 +13,9 @@ export default function Example() {
     id: '',
     startDate: '',
     endDate: '',
-    batch: '',
+    batch: 'E17',
     description: '',
-    title: '',
+    title: '62e0226ae94516d45d442f16',
   })
   const [currentEvents, setCurrentEvents] = useState()
   let today = startOfToday()
@@ -69,10 +69,10 @@ export default function Example() {
                   setCurrentEvents,
                 }}
               >
-                <div className="h-96 md:col-span-2">
+                <div className="col-span-2">
                   <Legend />
                 </div>
-                <div className="h-96 md:col-span-5">
+                <div className="col-span-5">
                   <Calender />
                 </div>
               </globalContext.Provider>
