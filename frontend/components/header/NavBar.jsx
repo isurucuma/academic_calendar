@@ -1,9 +1,10 @@
 import React from 'react'
 import CustomListBox from '../custom/CustomListBox'
+import LoginBtn from '../custom/Loginbtn'
 
 function NavBar() {
   return (
-    <div className="flex justify-center h-20 pt-4 bg-blue-900">
+    <div className="flex h-20 justify-center bg-blue-900 pt-4">
       <div className="mr-2">
         <CustomListBox
           width={52}
@@ -41,6 +42,9 @@ function NavBar() {
             { name: 'Semester 8' },
           ]}
         />
+      </div>
+      <div className="mr-2 mt-1">
+        <LoginBtn />
       </div>
     </div>
   )
