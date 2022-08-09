@@ -57,14 +57,13 @@ const legend = [
     color: 'border-purple-500',
     topMargin: 'mt-1',
     dates: [],
+    loop: 0,
   },
 ]
 
 function Legend() {
   const [data, setData] = React.useState()
   const state = React.useContext(addContext)
-
-  console.log(state.currentEvents)
 
   React.useEffect(() => {
     async function getData() {
@@ -93,6 +92,7 @@ function Legend() {
 
   return (
     <section className="object-fill border-2 border-gray-400 rounded-lg h-96">
+      {/* {console.log(legend)} */}
       {data ? (
         <>
           <div className="m-4">
@@ -106,13 +106,13 @@ function Legend() {
                   key={i}
                   className={`flex ${item.topMargin} cursor-pointer`}
                   onClick={() => {
-                    state.currentEvents.map((events, i) => {
-                      if (events.event.eventTitle === item.name) {
-                        var dt = new Date(events.event.startDate)
-                        state.setCurrentMonth(format(dt, 'MMM-yyyy'))
-                        console.log(item.dates)
-                      }
-                    })
+                    if (item.loop < item.dates.length) {
+                      var dt = new Date(item.dates[item.loop])
+                      state.setCurrentMonth(format(dt, 'MMM-yyyy'))
+                      item.loop++
+                    } else {
+                      item.loop = 0
+                    }
                   }}
                 >
                   <div
