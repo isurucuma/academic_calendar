@@ -1,24 +1,36 @@
 import '../styles/globals.css'
+import React, { createContext, useState } from 'react'
 import type { AppProps } from 'next/app'
 import NavBar from '../components/header/NavBar'
 import Footer from '../components/footer/Footer'
 import { SessionProvider } from 'next-auth/react'
 
+export const filterContext = createContext({})
+
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
+  const [filter, setFilter] = useState({ name: 'E17' })
+
   return (
     <SessionProvider session={session}>
-      <div className="col-4 flex min-h-screen flex-col">
-        <div className="col-span-1">
-          <NavBar />
-        </div>
+      <filterContext.Provider
+        value={{
+          filter,
+          setFilter,
+        }}
+      >
+        <div className="flex flex-col min-h-screen col-4">
+          <div className="col-span-1">
+            <NavBar />
+          </div>
 
-        <div className="col-span-2 flex flex-wrap overflow-hidden">
-          <Component {...pageProps} />
+          <div className="flex flex-wrap col-span-2 overflow-hidden">
+            <Component {...pageProps} />
+          </div>
+          <div className="col-span-1 mt-auto">
+            <Footer />
+          </div>
         </div>
-        <div className="col-span-1 mt-auto">
-          <Footer />
-        </div>
-      </div>
+      </filterContext.Provider>
     </SessionProvider>
   )
 }

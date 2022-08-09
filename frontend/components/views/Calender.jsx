@@ -23,7 +23,8 @@ import AddBoxIcon from '@mui/icons-material/AddBox'
 import axios from 'axios'
 
 import Meeting from './Meeting'
-import { addContext } from '../../pages'
+import { globalContext } from '../../pages'
+import { filterContext } from '../../pages/_app'
 import Form_1 from './Form_1'
 
 function classNames(...classes) {
@@ -56,15 +57,21 @@ function getDatesInRange(startDate, endDate) {
 function Calender() {
   const [data, setData] = React.useState()
   const { data: session } = useSession()
-  const state = useContext(addContext)
+
+  const filterState = useContext(filterContext)
+  const globalState = useContext(globalContext)
 
   React.useEffect(() => {
-    setData(state.currentEvents)
-  }, [state.currentEvents])
+    setData(globalState.currentEvents)
+  }, [globalState.currentEvents])
 
   let today = startOfToday()
   let [selectedDay, setSelectedDay] = useState(today)
-  let firstDayCurrentMonth = parse(state.currentMonth, 'MMM-yyyy', new Date())
+  let firstDayCurrentMonth = parse(
+    globalState.currentMonth,
+    'MMM-yyyy',
+    new Date()
+  )
 
   let days = eachDayOfInterval({
     start: firstDayCurrentMonth,
@@ -73,12 +80,12 @@ function Calender() {
 
   function previousMonth() {
     let firstDayNextMonth = add(firstDayCurrentMonth, { months: -1 })
-    state.setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'))
+    globalState.setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'))
   }
 
   function nextMonth() {
     let firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 })
-    state.setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'))
+    globalState.setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'))
   }
   let selectedDayMeetings
   if (data !== undefined && data !== null) {
@@ -90,7 +97,9 @@ function Calender() {
   }
   React.useEffect(() => {
     async function getData() {
-      const { data } = await axios.get(`http://localhost:3001/api/events/`)
+      const { data } = await axios.get(
+        `http://localhost:3001/api/events/${filterState.filter.name}`
+      )
 
       const event = data.map((item) => {
         const dates = getDatesInRange(
@@ -100,16 +109,16 @@ function Calender() {
 
         return { ...item, dates }
       })
-
-      state.setCurrentEvents(event)
+      console.log(event)
+      globalState.setCurrentEvents(event)
       // setData(data)
     }
     getData()
-  }, [])
+  }, [filterState.filter])
   return (
     <div
       className={
-        state.flag
+        globalState.flag
           ? 'gap-4 md:grid md:grid-cols-7'
           : 'gap-4 md:grid md:grid-cols-5'
       }
@@ -377,7 +386,7 @@ function Calender() {
           ))}
         </div>
       </section>
-      {state.flag ? (
+      {globalState.flag ? (
         <>
           <section className="flex flex-col col-span-4 mt-6 border-2 border-gray-400 rounded-lg md:mt-0">
             <h2 className="px-4 py-2 font-semibold text-gray-900">
@@ -429,7 +438,7 @@ function Calender() {
                 <Button
                   variant="outlined"
                   startIcon={<AddBoxIcon />}
-                  onClick={() => state.setFlags(true)}
+                  onClick={() => globalState.setFlags(true)}
                 >
                   Add
                 </Button>

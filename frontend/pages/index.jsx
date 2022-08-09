@@ -3,7 +3,7 @@ import Legend from '../components/views/Legend'
 import React, { createContext, useState } from 'react'
 import { format, startOfToday } from 'date-fns'
 
-export const addContext = createContext()
+export const globalContext = createContext()
 
 export default function Example() {
   const [flag, setFlags] = useState(false)
@@ -31,7 +31,7 @@ export default function Example() {
           {flag ? (
             <>
               <div className="h-96 md:col-span-7">
-                <addContext.Provider
+                <globalContext.Provider
                   value={{
                     setFlags,
                     flag,
@@ -48,12 +48,12 @@ export default function Example() {
                   }}
                 >
                   <Calender />
-                </addContext.Provider>
+                </globalContext.Provider>
               </div>
             </>
           ) : (
             <>
-              <addContext.Provider
+              <globalContext.Provider
                 value={{
                   setFlags,
                   flag,
@@ -75,7 +75,7 @@ export default function Example() {
                 <div className="h-96 md:col-span-5">
                   <Calender />
                 </div>
-              </addContext.Provider>
+              </globalContext.Provider>
             </>
           )}
         </div>

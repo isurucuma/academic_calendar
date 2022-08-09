@@ -8,10 +8,10 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import Backdrop from '@mui/material/Backdrop'
 import CircularProgress from '@mui/material/CircularProgress'
 
-import { addContext } from './../../pages/index'
+import { globalContext } from './../../pages/index'
 import axios from 'axios'
 function Form_1() {
-  const state = React.useContext(addContext)
+  const state = React.useContext(globalContext)
   const [open, setOpen] = React.useState(false)
 
   const handleSubmit = (e) => {
@@ -112,7 +112,7 @@ function Form_1() {
                 <option value="62e0226ae94516d45d442f1d">Online classes</option>
               </select>
             </div>
-            <div className="ml-4 form-group">
+            <div className="form-group ml-4">
               <label htmlFor="#" className="mr-2">
                 Description
               </label>
@@ -166,7 +166,7 @@ function Form_1() {
                 />
               </div>
             </div>
-            <div className="mt-3 ml-6 form-group form-control">
+            <div className="form-group form-control mt-3 ml-6">
               <label htmlFor="#" className="mr-3">
                 Batch
               </label>
@@ -188,7 +188,7 @@ function Form_1() {
           </div>
         </div>
 
-        <div className="mt-12 col-md-12">
+        <div className="col-md-12 mt-12">
           {state.isUpdate ? (
             <>
               <Button type="submit" variant="outlined" startIcon={<EditIcon />}>
