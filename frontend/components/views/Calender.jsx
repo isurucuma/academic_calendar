@@ -109,9 +109,8 @@ function Calender() {
 
         return { ...item, dates }
       })
-      console.log(event)
+
       globalState.setCurrentEvents(event)
-      // setData(data)
     }
     getData()
   }, [filterState.filter])

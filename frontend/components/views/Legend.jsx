@@ -3,7 +3,7 @@ import axios from 'axios'
 import { globalContext } from '../../pages'
 import { filterContext } from '../../pages/_app'
 
-import { format } from 'date-fns'
+import { format, startOfToday } from 'date-fns'
 
 let legend = [
   {
@@ -84,10 +84,11 @@ function Legend() {
   const filterState = React.useContext(filterContext)
 
   React.useEffect(() => {
-    legend.map((legend, i) => {
+    legend.map((legend) => {
       legend.dates = []
     })
-
+    let today = startOfToday()
+    globalState.setCurrentMonth(format(today, 'MMM-yyyy'))
     async function getData() {
       const { data } = await axios.get(
         `http://localhost:3001/api/eventsCategory/`
@@ -99,8 +100,8 @@ function Legend() {
 
   if (globalState.currentEvents) {
     {
-      legend.map((item, i) => {
-        globalState.currentEvents.map((events, i) => {
+      legend.map((item) => {
+        globalState.currentEvents.map((events) => {
           if (
             events.event.eventTitle === item.name &&
             !item.dates.includes(events.event.startDate) &&
