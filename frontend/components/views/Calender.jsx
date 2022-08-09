@@ -15,6 +15,8 @@ import {
   startOfToday,
 } from 'date-fns'
 import { useState, useContext } from 'react'
+import { useSession } from 'next-auth/react'
+
 import Button from '@mui/material/Button'
 import AddBoxIcon from '@mui/icons-material/AddBox'
 import axios from 'axios'
@@ -51,8 +53,7 @@ function getDatesInRange(startDate, endDate) {
 
 function Calender() {
   const [data, setData] = React.useState()
-  // const [color, setColor] = React.useState('')
-  // console.log(color)
+  const { data: session } = useSession()
 
   React.useEffect(() => {
     async function getData() {
@@ -456,15 +457,17 @@ function Calender() {
                 <p className="px-4 py-2">No meetings for today.</p>
               )} */}
             </ol>
-            <div className="flex justify-end px-4 py-2 mt-auto">
-              <Button
-                variant="outlined"
-                startIcon={<AddBoxIcon />}
-                onClick={() => state.setFlags(true)}
-              >
-                Add
-              </Button>
-            </div>
+            {session ? (
+              <div className="flex justify-end px-4 py-2 mt-auto">
+                <Button
+                  variant="outlined"
+                  startIcon={<AddBoxIcon />}
+                  onClick={() => state.setFlags(true)}
+                >
+                  Add
+                </Button>
+              </div>
+            ) : null}
           </section>
         </>
       )}

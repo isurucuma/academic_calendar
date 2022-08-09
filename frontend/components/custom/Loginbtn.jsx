@@ -15,7 +15,7 @@ export default function LoginBtn() {
   const { data: session } = useSession()
   if (session) {
     return (
-      <div className="m-0 flex flex-row justify-center">
+      <div className="flex flex-row justify-center m-0">
         <ColorButton variant="contained" onClick={() => signOut()}>
           Sign out
         </ColorButton>
@@ -24,7 +24,7 @@ export default function LoginBtn() {
     )
   }
   return (
-    <div className="m-0 flex flex-row justify-center">
+    <div className="flex flex-row justify-center m-0">
       <ColorButton variant="contained" onClick={() => signIn()}>
         Sign in
       </ColorButton>
