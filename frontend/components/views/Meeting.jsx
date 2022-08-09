@@ -1,6 +1,6 @@
 import { Menu, Transition } from '@headlessui/react'
 import { DotsVerticalIcon } from '@heroicons/react/outline'
-// import { format, parseISO } from 'date-fns'
+import { format, parseISO } from 'date-fns'
 import React, { Fragment, useContext } from 'react'
 import { useSession } from 'next-auth/react'
 
@@ -12,8 +12,8 @@ export default function Meeting({ data }) {
   const { data: session } = useSession()
 
   // console.log(data)
-  // let startDate = parseISO(data.startDate)
-  // let endDate = parseISO(data.endDate)
+  let startDate = parseISO(data.startDate)
+  let endDate = parseISO(data.endDate)
 
   // let startDateTime = parseISO(meeting.startDatetime)
   // let endDateTime = parseISO(meeting.endDatetime)
@@ -31,19 +31,13 @@ export default function Meeting({ data }) {
         className="flex-none w-10 h-10 rounded-full"
       /> */}
       <div className="flex-auto">
-        <p className="text-gray-900">{data.eventTitle}</p>
-        {/* <p className="text-gray-900">{meeting.name}</p> */}
+        <p className="text-black">{data.eventTitle}</p>
+        <p className="mt-0.5 text-black">{data.description}</p>
         <p className="mt-0.5">
-          {data.description}
-          {/* <time dateTime={data.startDate}>{format(startDate, 'h:mm a')}</time> -{' '}
-          <time dateTime={data.endDate}>{format(endDate, 'h:mm a')}</time> */}
-          {/* <time dateTime={meeting.startDatetime}>
-            {format(startDateTime, 'h:mm a')}
-          </time>{' '}
-          -{' '}
-          <time dateTime={meeting.endDatetime}>
-            {format(endDateTime, 'h:mm a')}
-          </time> */}
+          <time dateTime={data.startDate}>
+            {format(startDate, 'yyyy-mm-dd')}
+          </time>
+          - <time dateTime={data.endDate}>{format(endDate, 'yyyy-mm-dd')}</time>
         </p>
       </div>
       {session ? (

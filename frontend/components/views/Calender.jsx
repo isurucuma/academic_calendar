@@ -19,7 +19,9 @@ import { useSession } from 'next-auth/react'
 
 import Button from '@mui/material/Button'
 import AddBoxIcon from '@mui/icons-material/AddBox'
+
 import axios from 'axios'
+
 import Meeting from './Meeting'
 import { addContext } from '../../pages'
 import Form_1 from './Form_1'
@@ -54,32 +56,15 @@ function getDatesInRange(startDate, endDate) {
 function Calender() {
   const [data, setData] = React.useState()
   const { data: session } = useSession()
+  const state = useContext(addContext)
 
   React.useEffect(() => {
-    async function getData() {
-      const { data } = await axios.get(`http://localhost:3001/api/events/`)
-
-      const event = data.map((item) => {
-        const dates = getDatesInRange(
-          new Date(item.event.startDate),
-          new Date(item.event.endDate)
-        )
-
-        return { ...item, dates }
-      })
-
-      setData(event)
-      // setData(data)
-    }
-    getData()
-  }, [])
-
-  const state = useContext(addContext)
+    setData(state.currentEvents)
+  }, [state.currentEvents])
 
   let today = startOfToday()
   let [selectedDay, setSelectedDay] = useState(today)
-  let [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyyy'))
-  let firstDayCurrentMonth = parse(currentMonth, 'MMM-yyyy', new Date())
+  let firstDayCurrentMonth = parse(state.currentMonth, 'MMM-yyyy', new Date())
 
   let days = eachDayOfInterval({
     start: firstDayCurrentMonth,
@@ -88,12 +73,12 @@ function Calender() {
 
   function previousMonth() {
     let firstDayNextMonth = add(firstDayCurrentMonth, { months: -1 })
-    setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'))
+    state.setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'))
   }
 
   function nextMonth() {
     let firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 })
-    setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'))
+    state.setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'))
   }
   let selectedDayMeetings
   if (data !== undefined && data !== null) {
@@ -103,9 +88,24 @@ function Calender() {
       }
     })
   }
-  // let selectedDayMeetings = meetings.filter((meeting) =>
-  //   isSameDay(parseISO(meeting.startDatetime), selectedDay)
-  // )
+  React.useEffect(() => {
+    async function getData() {
+      const { data } = await axios.get(`http://localhost:3001/api/events/`)
+
+      const event = data.map((item) => {
+        const dates = getDatesInRange(
+          new Date(item.event.startDate),
+          new Date(item.event.endDate) - 1
+        )
+
+        return { ...item, dates }
+      })
+
+      state.setCurrentEvents(event)
+      // setData(data)
+    }
+    getData()
+  }, [])
   return (
     <div
       className={
@@ -162,41 +162,8 @@ function Calender() {
                     id="date-button"
                     type="button"
                     onClick={() => {
-                      // let res = data.map((event) => {
-
-                      // const offset = day.getTimezoneOffset()
-                      // day = new Date(day.getTime() - offset * 60 * 1000)
-
-                      // console.log(
-                      //   data[0].dates.some((date) => {
-                      //     date.toISOString().split('T')[0] ===
-                      //       day.toISOString().split('T')[0] &&
-                      //       data[0].event.eventTitle === 'Survey camp'
-                      //   })
-                      // )
-                      // console.log(data[0].dates[0].toISOString().split('T')[0])
-                      // console.log(
-                      //   day.toISOString().split('T')[0] ===
-                      //     data[0].dates[0].toISOString().split('T')[0]
-                      // )
-
-                      // console.log(
-                      //   data.some((meeting) => {
-                      //     let res = meeting.dates.some((date) => {
-                      //       if (
-                      //         day.toISOString().split('T')[0] ===
-                      //           date.toISOString().split('T')[0] &&
-                      //         meeting.event.eventTitle === 'Survey camp'
-                      //       )
-                      //         return true
-                      //     })
-                      //     return res
-                      //   })
-                      // )
-
                       setSelectedDay(day)
                     }}
-                    //"additional day colord+event not shown in all days"
                     className={classNames(
                       isEqual(day, selectedDay) && 'text-white',
                       !isEqual(day, selectedDay) &&
@@ -258,8 +225,8 @@ function Calender() {
                         (meeting) =>
                           isSameDay(parseISO(meeting.event.startDate), day) &&
                           meeting.event.eventTitle ===
-                            'Soft skill development pro'
-                      ) && 'solid border-2 border-orange-500',
+                            'Soft skill development program'
+                      ) && 'solid border-2 border-pink-500',
                       data.some(
                         (meeting) =>
                           isSameDay(parseISO(meeting.event.startDate), day) &&
@@ -311,7 +278,7 @@ function Calender() {
                             day.toISOString().split('T')[0] ===
                               date.toISOString().split('T')[0] &&
                             meeting.event.eventTitle ===
-                              'Soft skill development pro'
+                              'Soft skill development program'
                           )
                             return true
                         })
@@ -433,7 +400,7 @@ function Calender() {
         <>
           <section className="flex flex-col col-span-2 mt-6 border-2 border-gray-400 rounded-lg md:mt-0">
             <h2 className="px-4 py-2 font-semibold text-gray-900">
-              Schedule for{' '}
+              Today -{' '}
               <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>
                 {format(selectedDay, 'MMM dd, yyy')}
               </time>

@@ -1,6 +1,8 @@
 import Calender from '../components/views/Calender'
 import Legend from '../components/views/Legend'
 import React, { createContext, useState } from 'react'
+import { format, startOfToday } from 'date-fns'
+
 export const addContext = createContext()
 
 export default function Example() {
@@ -15,6 +17,9 @@ export default function Example() {
     description: '',
     title: '',
   })
+  const [currentEvents, setCurrentEvents] = useState()
+  let today = startOfToday()
+  let [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyyy'))
 
   return (
     <div className="container">
@@ -36,6 +41,10 @@ export default function Example() {
                     setData,
                     isUpdate,
                     setIsUpdate,
+                    currentEvents,
+                    currentMonth,
+                    setCurrentMonth,
+                    setCurrentEvents,
                   }}
                 >
                   <Calender />
@@ -44,25 +53,29 @@ export default function Example() {
             </>
           ) : (
             <>
-              <div className="h-96 md:col-span-2">
-                <Legend />
-              </div>
-              <div className="h-96 md:col-span-5">
-                <addContext.Provider
-                  value={{
-                    setFlags,
-                    flag,
-                    setDate,
-                    date,
-                    data,
-                    setData,
-                    isUpdate,
-                    setIsUpdate,
-                  }}
-                >
+              <addContext.Provider
+                value={{
+                  setFlags,
+                  flag,
+                  setDate,
+                  date,
+                  data,
+                  setData,
+                  isUpdate,
+                  setIsUpdate,
+                  currentEvents,
+                  currentMonth,
+                  setCurrentMonth,
+                  setCurrentEvents,
+                }}
+              >
+                <div className="h-96 md:col-span-2">
+                  <Legend />
+                </div>
+                <div className="h-96 md:col-span-5">
                   <Calender />
-                </addContext.Provider>
-              </div>
+                </div>
+              </addContext.Provider>
             </>
           )}
         </div>
