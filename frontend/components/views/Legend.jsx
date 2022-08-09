@@ -8,70 +8,70 @@ import { format, startOfToday } from 'date-fns'
 let legend = [
   {
     name: 'Dead week',
-    color: 'border-orange-500',
+    color: 'orange-500',
     topMargin: 'mt-5',
     dates: [],
     loop: 0,
   },
   {
     name: 'Examination',
-    color: 'border-blue-500',
+    color: 'blue-500',
     topMargin: 'mt-1',
     dates: [],
     loop: 0,
   },
   {
     name: 'Vacation',
-    color: 'border-green-500',
+    color: 'green-500',
     topMargin: 'mt-1',
     dates: [],
     loop: 0,
   },
   {
     name: 'Industrial training special 1',
-    color: 'border-black',
+    color: 'black',
     topMargin: 'mt-1',
     dates: [],
     loop: 0,
   },
   {
     name: 'Industrial training special 2',
-    color: 'border-gray-500',
+    color: 'gray-500',
     topMargin: 'mt-1',
     dates: [],
     loop: 0,
   },
   {
     name: 'Final exam ending week',
-    color: 'border-red-500',
+    color: 'red-500',
     topMargin: 'mt-1',
     dates: [],
     loop: 0,
   },
   {
     name: 'Survey camp',
-    color: 'border-yellow-500',
+    color: 'yellow-500',
     topMargin: 'mt-1',
     dates: [],
     loop: 0,
   },
   {
     name: 'Soft skill development program',
-    color: 'border-pink-500',
+    color: 'pink-500',
     topMargin: 'mt-1',
     dates: [],
     loop: 0,
   },
   {
     name: 'General elective special',
-    color: 'border-orange-900',
+    color: 'orange-900',
     topMargin: 'mt-1',
     dates: [],
     loop: 0,
   },
   {
     name: 'Online classes',
-    color: 'border-purple-500',
+    color: 'purple-500',
     topMargin: 'mt-1',
     dates: [],
     loop: 0,
@@ -135,7 +135,11 @@ function Legend() {
                   }}
                 >
                   <div
-                    className={`mx-auto mt-1 h-6 w-6 border-2 ${item.color} rounded-full`}
+                    className={
+                      item.dates.length > 0
+                        ? `mx-auto mt-1 h-6 w-6 border-4 border-${item.color} rounded-full bg-gray-400`
+                        : `mx-auto mt-1 h-6 w-6 border-4 border-${item.color} rounded-full`
+                    }
                   ></div>
                   <span className="flex w-3/4 py-1 text-xs">
                     {data[i].name}
